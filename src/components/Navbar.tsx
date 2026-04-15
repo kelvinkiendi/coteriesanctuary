@@ -1,0 +1,93 @@
+import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+
+interface NavbarProps {
+  onBookNow: () => void;
+}
+
+const Navbar = ({ onBookNow }: NavbarProps) => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const links = [
+    { label: "About", href: "#about" },
+    { label: "Services", href: "#services" },
+    { label: "Gallery", href: "#gallery" },
+    { label: "Products", href: "#products" },
+    { label: "Contact", href: "#contact" },
+  ];
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-card/95 backdrop-blur-md shadow-elegant py-3"
+          : "bg-transparent py-5"
+      }`}
+    >
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        <a href="#" className="font-heading text-2xl md:text-3xl font-bold tracking-[0.2em] text-primary">
+          COTERIE
+        </a>
+
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-8">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors"
+            >
+              {l.label}
+            </a>
+          ))}
+          <button
+            onClick={onBookNow}
+            className="ml-4 px-6 py-2.5 bg-accent text-accent-foreground font-body font-semibold text-sm tracking-wider uppercase rounded-sm hover:bg-gold-dark transition-colors shadow-gold"
+          >
+            Book Now
+          </button>
+        </div>
+
+        {/* Mobile toggle */}
+        <div className="md:hidden flex items-center gap-3">
+          <button
+            onClick={onBookNow}
+            className="px-4 py-2 bg-accent text-accent-foreground font-body font-semibold text-xs tracking-wider uppercase rounded-sm"
+          >
+            Book
+          </button>
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-foreground">
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden bg-card/98 backdrop-blur-md border-t border-border">
+          <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMobileOpen(false)}
+                className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors py-2"
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
