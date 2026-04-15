@@ -1,5 +1,7 @@
 import { useState, useMemo } from "react";
 import { X, Calendar, Clock, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const SERVICES = [
   "Classic Manicure", "Gel Manicure", "Luxury Spa Manicure",
@@ -28,19 +30,38 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [requests, setRequests] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const refNumber = useMemo(() => `COT-${Date.now().toString(36).toUpperCase()}`, []);
 
-  // Reset when service changes from parent
   useState(() => {
     if (preselectedService) setService(preselectedService);
   });
 
   if (!open) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStep("confirmed");
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.from("bookings").insert({
+        service,
+        date,
+        time,
+        name,
+        phone,
+        email: email || null,
+        requests: requests || null,
+        ref_number: refNumber,
+      });
+      if (error) throw error;
+      setStep("confirmed");
+    } catch (err: any) {
+      toast({ title: "Booking failed", description: err.message || "Please try again.", variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClose = () => {
@@ -55,12 +76,10 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
     onClose();
   };
 
-  // Min date = today
   const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Overlay */}
       <div className="absolute inset-0 bg-primary/60 backdrop-blur-sm" onClick={handleClose} />
 
       <div className="relative bg-card rounded-sm shadow-elegant w-full max-w-lg max-h-[90vh] overflow-y-auto">
@@ -75,110 +94,63 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
               Reserve Your Session
             </h2>
 
-            {/* Service */}
             <label className="block mb-4">
               <span className="font-body text-sm font-semibold text-foreground mb-1 block">Service</span>
-              <select
-                required
-                value={service}
-                onChange={(e) => setService(e.target.value)}
-                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-              >
+              <select required value={service} onChange={(e) => setService(e.target.value)}
+                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent">
                 <option value="">Select a service</option>
-                {SERVICES.map((s) => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
+                {SERVICES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </label>
 
-            {/* Date & Time */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <label className="block">
                 <span className="font-body text-sm font-semibold text-foreground mb-1 flex items-center gap-1">
                   <Calendar size={14} /> Date
                 </span>
-                <input
-                  type="date"
-                  required
-                  min={today}
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-                />
+                <input type="date" required min={today} value={date} onChange={(e) => setDate(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent" />
               </label>
               <label className="block">
                 <span className="font-body text-sm font-semibold text-foreground mb-1 flex items-center gap-1">
                   <Clock size={14} /> Time
                 </span>
-                <select
-                  required
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-                >
+                <select required value={time} onChange={(e) => setTime(e.target.value)}
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent">
                   <option value="">Select time</option>
-                  {TIME_SLOTS.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
+                  {TIME_SLOTS.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </label>
             </div>
 
-            {/* Name */}
             <label className="block mb-4">
               <span className="font-body text-sm font-semibold text-foreground mb-1 block">Full Name</span>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Jane Doe"
-                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-              />
+              <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Doe"
+                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent" />
             </label>
 
-            {/* Phone & Email */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <label className="block">
                 <span className="font-body text-sm font-semibold text-foreground mb-1 block">Phone</span>
-                <input
-                  type="tel"
-                  required
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+254 7XX XXX XXX"
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-                />
+                <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+254 7XX XXX XXX"
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent" />
               </label>
               <label className="block">
                 <span className="font-body text-sm font-semibold text-foreground mb-1 block">Email</span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="jane@email.com"
-                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent"
-                />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="jane@email.com"
+                  className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent" />
               </label>
             </div>
 
-            {/* Requests */}
             <label className="block mb-6">
               <span className="font-body text-sm font-semibold text-foreground mb-1 block">Special Requests</span>
-              <textarea
-                value={requests}
-                onChange={(e) => setRequests(e.target.value)}
-                rows={3}
-                placeholder="Any preferences or notes..."
-                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent resize-none"
-              />
+              <textarea value={requests} onChange={(e) => setRequests(e.target.value)} rows={3} placeholder="Any preferences or notes..."
+                className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent resize-none" />
             </label>
 
-            <button
-              type="submit"
-              className="w-full py-3 bg-accent text-accent-foreground font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors shadow-gold"
-            >
-              Confirm Booking
+            <button type="submit" disabled={submitting}
+              className="w-full py-3 bg-accent text-accent-foreground font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors shadow-gold disabled:opacity-50">
+              {submitting ? "Confirming..." : "Confirm Booking"}
             </button>
           </form>
         ) : (
@@ -200,10 +172,8 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
               A confirmation will be sent to {phone} {email && `and ${email}`}. We look forward to seeing you!
             </p>
 
-            <button
-              onClick={handleClose}
-              className="w-full py-3 bg-accent text-accent-foreground font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors"
-            >
+            <button onClick={handleClose}
+              className="w-full py-3 bg-accent text-accent-foreground font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors">
               Done
             </button>
           </div>
