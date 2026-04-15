@@ -70,7 +70,11 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
         `${email ? `📧 Email: ${email}\n` : ""}` +
         `${requests ? `📝 Notes: ${requests}\n` : ""}`
       );
-      window.open(`https://wa.me/254722365861?text=${whatsappMsg}`, "_blank");
+      const whatsappLink = document.createElement("a");
+      whatsappLink.href = `https://wa.me/254722365861?text=${whatsappMsg}`;
+      whatsappLink.target = "_blank";
+      whatsappLink.rel = "noopener noreferrer";
+      whatsappLink.click();
     } catch (err: any) {
       toast({ title: "Booking failed", description: err.message || "Please try again.", variant: "destructive" });
     } finally {
