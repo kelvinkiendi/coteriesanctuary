@@ -3,6 +3,7 @@ import { X, Calendar, Clock, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
+
 const SERVICES = [
   "Classic Manicure", "Gel Manicure", "Luxury Spa Manicure",
   "Classic Pedicure", "Gel Pedicure", "Luxury Spa Pedicure",
@@ -45,17 +46,20 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
     e.preventDefault();
     setSubmitting(true);
     try {
-      const { error } = await supabase.from("bookings").insert({
-        service,
-        date,
-        time,
-        name,
-        phone,
-        email: email || null,
-        requests: requests || null,
-        ref_number: refNumber,
+      const { data, error } = await supabase.functions.invoke("create-booking", {
+        body: {
+          service,
+          date,
+          time,
+          name,
+          phone,
+          email: email || null,
+          requests: requests || null,
+          ref_number: refNumber,
+        },
       });
-      if (error) throw error;
+      if (error) throw new Error("Unable to complete your booking.");
+      if (data?.error) throw new Error("Unable to complete your booking.");
       setStep("confirmed");
 
       // Send WhatsApp confirmation to COTERIE
@@ -76,7 +80,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
       whatsappLink.rel = "noopener noreferrer";
       whatsappLink.click();
     } catch (err: any) {
-      toast({ title: "Booking failed", description: err.message || "Please try again.", variant: "destructive" });
+      toast({ title: "Booking failed", description: "Unable to complete your booking. Please try again.", variant: "destructive" });
     } finally {
       setSubmitting(false);
     }
