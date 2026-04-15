@@ -183,7 +183,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
             </div>
 
             <p className="font-body text-xs text-muted-foreground mb-6">
-              A confirmation will be sent to {phone} {email && `and ${email}`}. We look forward to seeing you!
+              Your booking details have been sent via WhatsApp. We look forward to seeing you!
             </p>
 
             <button onClick={handleClose}
