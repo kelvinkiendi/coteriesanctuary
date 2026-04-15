@@ -1,17 +1,20 @@
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import cuticleImg from "@/assets/products-cuticle.jpg";
+import shoehornImg from "@/assets/products-shoehorn.jpg";
+import glovesImg from "@/assets/products-gloves.jpg";
+import claspImg from "@/assets/products-clasp.jpg";
 
 const products = [
   { name: "Cuticle Oils", desc: "Nourishing blend for healthy, hydrated cuticles.", price: "800", img: cuticleImg },
-  { name: "Shoe Horns", desc: "Elegant, durable shoe horns for everyday convenience.", price: "600", img: cuticleImg },
-  { name: "Kitchen Washing Gloves", desc: "Protect your manicure while tackling daily chores.", price: "400", img: cuticleImg },
-  { name: "Magnetic Necklace Clasps", desc: "Effortless elegance — fasten necklaces with one hand.", price: "1,200", img: cuticleImg },
+  { name: "Shoe Horns", desc: "Elegant, durable shoe horns for everyday convenience.", price: "600", img: shoehornImg },
+  { name: "Kitchen Washing Gloves", desc: "Protect your manicure while tackling daily chores.", price: "400", img: glovesImg },
+  { name: "Magnetic Necklace Clasps", desc: "Effortless elegance — fasten necklaces with one hand.", price: "1,200", img: claspImg },
 ];
 
 const ProductsSection = () => {
   const whatsappLink = (productName: string) =>
-    `https://wa.me/?text=${encodeURIComponent(`Hi COTERIE! I'm interested in the ${productName}. Could you share more details?`)}`;
+    `https://wa.me/254722365861?text=${encodeURIComponent(`Hi COTERIE! I'm interested in the ${productName}. Could you share more details?`)}`;
 
   return (
     <section id="products" className="py-20 md:py-32 bg-section-cream">
@@ -46,6 +49,8 @@ const ProductsSection = () => {
                   src={p.img}
                   alt={p.name}
                   loading="lazy"
+                  width={768}
+                  height={768}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

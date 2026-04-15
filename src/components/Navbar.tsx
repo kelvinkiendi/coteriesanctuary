@@ -23,6 +23,15 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
     { label: "Contact", href: "#contact" },
   ];
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+    setMobileOpen(false);
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -32,16 +41,20 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
       }`}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <a href="#" className="font-heading text-2xl md:text-3xl font-bold tracking-[0.2em] text-primary">
+        <a
+          href="#"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          className="font-heading text-2xl md:text-3xl font-bold tracking-[0.2em] text-primary"
+        >
           COTERIE
         </a>
 
-        {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
               className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors"
             >
               {l.label}
@@ -55,7 +68,6 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
           </button>
         </div>
 
-        {/* Mobile toggle */}
         <div className="md:hidden flex items-center gap-3">
           <button
             onClick={onBookNow}
@@ -69,7 +81,6 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden bg-card/98 backdrop-blur-md border-t border-border">
           <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
@@ -77,7 +88,7 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
               <a
                 key={l.href}
                 href={l.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => handleNavClick(e, l.href)}
                 className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors py-2"
               >
                 {l.label}

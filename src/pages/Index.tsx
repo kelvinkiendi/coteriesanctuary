@@ -10,6 +10,7 @@ import LocationSection from "@/components/LocationSection";
 import QuickBookSection from "@/components/QuickBookSection";
 import FooterSection from "@/components/FooterSection";
 import BookingModal from "@/components/BookingModal";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const Index = () => {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -37,10 +38,11 @@ const Index = () => {
         onClose={() => setBookingOpen(false)}
         preselectedService={preselectedService}
       />
+      <ScrollToTop />
 
       {/* WhatsApp floating button */}
       <a
-        href="https://wa.me/?text=Hi%20COTERIE!%20I'd%20like%20to%20make%20an%20inquiry."
+        href="https://wa.me/254722365861?text=Hi%20COTERIE!%20I'd%20like%20to%20make%20an%20inquiry."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
