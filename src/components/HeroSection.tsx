@@ -8,10 +8,7 @@ interface HeroSectionProps {
 
 const HeroSection = ({ onBookNow }: HeroSectionProps) => (
   <section className="relative min-h-screen flex items-center overflow-hidden">
-    {/* Background gradient */}
     <div className="absolute inset-0 bg-hero-gradient" />
-
-    {/* Image overlay */}
     <div className="absolute inset-0">
       <img
         src={heroImg}
@@ -21,8 +18,6 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
         className="w-full h-full object-cover opacity-30 mix-blend-overlay"
       />
     </div>
-
-    {/* Decorative gold line */}
     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent" />
 
     <div className="relative container mx-auto px-4 pt-24 pb-16 text-center">
@@ -32,7 +27,7 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
         transition={{ duration: 0.8 }}
         className="font-body text-sm md:text-base tracking-[0.4em] uppercase text-gold-light mb-6"
       >
-        Where Beauty Meets Sanctuary
+        Sterilized. Serene. Yours.
       </motion.p>
 
       <motion.h1
@@ -51,7 +46,7 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
         transition={{ duration: 0.8, delay: 0.4 }}
         className="font-heading text-xl md:text-2xl text-primary-foreground/80 italic mb-8 max-w-2xl mx-auto"
       >
-        Your Sanctuary for Nail Artistry &amp; Self-Care
+        Nairobi's Quiet Luxury Nail Sanctuary
       </motion.p>
 
       <motion.div
@@ -77,7 +72,6 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
       </motion.button>
     </div>
 
-    {/* Bottom fade */}
     <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
   </section>
 );

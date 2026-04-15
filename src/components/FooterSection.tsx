@@ -4,15 +4,13 @@ const FooterSection = () => (
   <footer className="bg-primary text-primary-foreground pt-16 pb-8">
     <div className="container mx-auto px-4">
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-        {/* Brand */}
         <div>
           <h3 className="font-heading text-2xl font-bold tracking-[0.15em] mb-4">COTERIE</h3>
           <p className="font-body text-sm text-primary-foreground/60 leading-relaxed">
-            Where Beauty Meets Sanctuary. Kilimani's premier destination for nail artistry and self-care.
+            Sterilized. Serene. Yours. Nairobi's quiet luxury nail sanctuary in the heart of Kilimani.
           </p>
         </div>
 
-        {/* Quick Links */}
         <div>
           <h4 className="font-heading font-semibold mb-4 text-gold">Quick Links</h4>
           <div className="flex flex-col gap-2">
@@ -28,7 +26,6 @@ const FooterSection = () => (
           </div>
         </div>
 
-        {/* Hours */}
         <div>
           <h4 className="font-heading font-semibold mb-4 text-gold">Studio Hours</h4>
           <div className="font-body text-sm text-primary-foreground/60 space-y-1">
@@ -37,12 +34,14 @@ const FooterSection = () => (
           </div>
         </div>
 
-        {/* Contact */}
         <div>
           <h4 className="font-heading font-semibold mb-4 text-gold">Contact</h4>
           <div className="space-y-3">
-            <a href="tel:+254700000000" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
-              <Phone size={14} /> +254 700 000 000
+            <a href="tel:+254722365861" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
+              <Phone size={14} /> +254 722 365 861
+            </a>
+            <a href="https://wa.me/254722365861" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
+              <Phone size={14} /> WhatsApp
             </a>
             <a href="mailto:hello@coterie.co.ke" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
               <Mail size={14} /> hello@coterie.co.ke
@@ -55,7 +54,6 @@ const FooterSection = () => (
         </div>
       </div>
 
-      {/* Newsletter */}
       <div className="border-t border-primary-foreground/10 pt-8 mb-8">
         <div className="max-w-md mx-auto text-center">
           <h4 className="font-heading font-semibold mb-3 text-gold">Stay in the Loop</h4>
@@ -72,7 +70,6 @@ const FooterSection = () => (
         </div>
       </div>
 
-      {/* Bottom */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-primary-foreground/10 pt-8">
         <p className="font-body text-xs text-primary-foreground/40">
           © 2026 COTERIE Nail Sanctuary. All rights reserved.
