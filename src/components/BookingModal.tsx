@@ -57,6 +57,20 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
       });
       if (error) throw error;
       setStep("confirmed");
+
+      // Send WhatsApp confirmation to COTERIE
+      const whatsappMsg = encodeURIComponent(
+        `✨ New COTERIE Booking ✨\n\n` +
+        `📋 Ref: ${refNumber}\n` +
+        `💅 Service: ${service}\n` +
+        `📅 Date: ${date}\n` +
+        `🕐 Time: ${time}\n` +
+        `👤 Name: ${name}\n` +
+        `📞 Phone: ${phone}\n` +
+        `${email ? `📧 Email: ${email}\n` : ""}` +
+        `${requests ? `📝 Notes: ${requests}\n` : ""}`
+      );
+      window.open(`https://wa.me/254722365861?text=${whatsappMsg}`, "_blank");
     } catch (err: any) {
       toast({ title: "Booking failed", description: err.message || "Please try again.", variant: "destructive" });
     } finally {
