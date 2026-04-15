@@ -17,6 +17,8 @@ const TIME_SLOTS = [
   "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM",
 ];
 
+const MAX_BOOKINGS_PER_HOUR = 5;
+
 function isValidDate(dateStr: string): boolean {
   const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) return false;
@@ -32,37 +34,41 @@ Deno.serve(async (req) => {
     return new Response("ok", { headers: corsHeaders });
   }
 
+  const supabaseAdmin = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  );
+
   try {
+    // Rate limiting by IP
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+
+    const { count } = await supabaseAdmin
+      .from("booking_rate_limits")
+      .select("*", { count: "exact", head: true })
+      .eq("ip_address", ip)
+      .gte("created_at", oneHourAgo);
+
+    if ((count ?? 0) >= MAX_BOOKINGS_PER_HOUR) {
+      return new Response(JSON.stringify({ error: "Too many booking requests. Please try again later." }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const body = await req.json();
     const { service, date, time, name, phone, email, requests, ref_number } = body;
 
-    // Validate required fields
     const errors: string[] = [];
-
-    if (!service || !SERVICES.includes(service)) {
-      errors.push("Invalid service selected.");
-    }
-    if (!date || !isValidDate(date)) {
-      errors.push("Invalid or past date.");
-    }
-    if (!time || !TIME_SLOTS.includes(time)) {
-      errors.push("Invalid time slot.");
-    }
-    if (!name || typeof name !== "string" || name.trim().length < 1 || name.trim().length > 100) {
-      errors.push("Name is required (max 100 characters).");
-    }
-    if (!phone || typeof phone !== "string" || phone.trim().length < 6 || phone.trim().length > 20) {
-      errors.push("Valid phone number is required.");
-    }
-    if (email && (typeof email !== "string" || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) {
-      errors.push("Invalid email address.");
-    }
-    if (requests && (typeof requests !== "string" || requests.length > 500)) {
-      errors.push("Special requests must be under 500 characters.");
-    }
-    if (!ref_number || typeof ref_number !== "string" || ref_number.length > 30) {
-      errors.push("Invalid reference number.");
-    }
+    if (!service || !SERVICES.includes(service)) errors.push("Invalid service selected.");
+    if (!date || !isValidDate(date)) errors.push("Invalid or past date.");
+    if (!time || !TIME_SLOTS.includes(time)) errors.push("Invalid time slot.");
+    if (!name || typeof name !== "string" || name.trim().length < 1 || name.trim().length > 100) errors.push("Name is required (max 100 characters).");
+    if (!phone || typeof phone !== "string" || phone.trim().length < 6 || phone.trim().length > 20) errors.push("Valid phone number is required.");
+    if (email && (typeof email !== "string" || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) errors.push("Invalid email address.");
+    if (requests && (typeof requests !== "string" || requests.length > 500)) errors.push("Special requests must be under 500 characters.");
+    if (!ref_number || typeof ref_number !== "string" || ref_number.length > 30) errors.push("Invalid reference number.");
 
     if (errors.length > 0) {
       return new Response(JSON.stringify({ error: errors.join(" ") }), {
@@ -71,10 +77,12 @@ Deno.serve(async (req) => {
       });
     }
 
-    const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-    );
+    // Record this request for rate limiting
+    await supabaseAdmin.from("booking_rate_limits").insert({ ip_address: ip });
+
+    // Clean up old rate limit entries (older than 2 hours)
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+    await supabaseAdmin.from("booking_rate_limits").delete().lt("created_at", twoHoursAgo);
 
     const { error } = await supabaseAdmin.from("bookings").insert({
       service: service.trim(),
