@@ -17,9 +17,10 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
 
   const links = [
     { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
+    { label: "Services", href: "/services", route: true },
     { label: "Packages", href: "/packages", route: true },
     { label: "Vouchers", href: "#vouchers" },
+    { label: "Shop", href: "/shop", route: true },
     { label: "Gallery", href: "#gallery" },
     { label: "Contact", href: "#contact" },
   ];
