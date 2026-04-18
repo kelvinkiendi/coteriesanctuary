@@ -48,6 +48,7 @@ const categories: Category[] = [
     items: [
       { name: "Coterie Classic Gents Manicure", price: "2000" },
       { name: "Coterie Signature Gents Manicure", price: "2500" },
+      { name: "Coterie Pamper Gents Manicure", price: "3500" },
     ],
   },
   {
@@ -55,6 +56,7 @@ const categories: Category[] = [
     items: [
       { name: "Coterie Classic Gents Pedicure", price: "2000" },
       { name: "Coterie Signature Gents Pedicure", price: "3500" },
+      { name: "Coterie Pamper Gents Pedicure", price: "4500" },
     ],
   },
   {
@@ -70,6 +72,10 @@ const categories: Category[] = [
       { name: "Short Tip Extensions", price: "5500" },
       { name: "Medium Tip Extensions", price: "5000" },
       { name: "Long Tip Extensions", price: "4500" },
+      { name: "XL Tip Extensions", price: "6000" },
+      { name: "Stiletto Tip Extensions", price: "6500" },
+      { name: "Coffin Tip Extensions", price: "6500" },
+      { name: "Almond Tip Extensions", price: "6000" },
     ],
   },
   {
