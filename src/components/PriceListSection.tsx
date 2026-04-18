@@ -14,99 +14,99 @@ const categories: Category[] = [
   {
     title: "Application & Polish",
     items: [
-      { name: "Regular Polish Application", price: "TBD" },
-      { name: "Gel Polish Application", price: "TBD" },
-      { name: "French Polish Add-On", price: "TBD" },
+      { name: "Regular Polish Application", price: "800" },
+      { name: "Gel Polish Application", price: "1000" },
+      { name: " ", price: " " },
     ],
   },
   {
     title: "Overlays on Natural Nails",
     items: [
-      { name: "Gel Overlay", price: "TBD" },
-      { name: "Acrylic Overlay", price: "TBD" },
-      { name: "Builder Gel Overlay", price: "TBD" },
+      { name: "Gel Overlay", price: "3000" },
+      { name: "Acrylic Overlay", price: "4000" },
+      { name: "Polygel Overlay", price: "3500" },
     ],
   },
   {
     title: "Manicures",
     items: [
-      { name: "Classic Manicure", price: "TBD" },
-      { name: "Gel Manicure", price: "TBD" },
-      { name: "Luxury Spa Manicure", price: "TBD" },
+      { name: "Coterie Classic Manicure", price: "2000" },
+      { name: "Coterie Signature Manicure", price: "2800" },
+      { name: "Coterie Pamper Manicure", price: "3500" },
     ],
   },
   {
     title: "Pedicures",
     items: [
-      { name: "Classic Pedicure", price: "TBD" },
-      { name: "Gel Pedicure", price: "TBD" },
-      { name: "Luxury Spa Pedicure", price: "TBD" },
+      { name: "Coterie Classic Pedicure", price: "2300" },
+      { name: "Coterie Signature Pedicure", price: "3800" },
+      { name: "Coterie Pamper Pedicure", price: "4500" },
     ],
   },
   {
     title: "Gents Manicures",
     items: [
-      { name: "Classic Gents Manicure", price: "TBD" },
-      { name: "Deluxe Gents Manicure", price: "TBD" },
+      { name: "Coterie Classic Gents Manicure", price: "2000" },
+      { name: "Coterie Signature Gents Manicure", price: "2500" },
     ],
   },
   {
     title: "Gents Pedicures",
     items: [
-      { name: "Classic Gents Pedicure", price: "TBD" },
-      { name: "Deluxe Gents Pedicure", price: "TBD" },
+      { name: "Coterie Classic Gents Pedicure", price: "2000" },
+      { name: "Coterie Signature Gents Pedicure", price: "3500" },
     ],
   },
   {
     title: "Stick-Ons",
     items: [
-      { name: "Press-On Stick-Ons", price: "TBD" },
-      { name: "Premium Stick-On Set", price: "TBD" },
+      { name: "Pre- Shaped Stick-Ons", price: "3000" },
+      { name: " ", price: " " },
     ],
   },
   {
     title: "Tip Extensions",
     items: [
-      { name: "Short Tip Extensions", price: "TBD" },
-      { name: "Medium Tip Extensions", price: "TBD" },
-      { name: "Long Tip Extensions", price: "TBD" },
+      { name: "Short Tip Extensions", price: "5500" },
+      { name: "Medium Tip Extensions", price: "5000" },
+      { name: "Long Tip Extensions", price: "4500" },
     ],
   },
   {
-    title: "Nail Molding & Sculpting",
+    title: "Nail Moulding & Sculpting",
     items: [
-      { name: "Acrylic Sculpting", price: "TBD" },
-      { name: "Gel Sculpting", price: "TBD" },
-      { name: "Custom Mold Design", price: "TBD" },
+      { name: "Acrylic Sculpting", price: "5500" },
+      { name: "Gel Sculpting", price: "5000" },
+      { name: "Acrylic Moulding", price: "4500" },
     ],
   },
   {
     title: "Infills / Refills",
     items: [
-      { name: "Acrylic Infill", price: "TBD" },
-      { name: "Gel Infill", price: "TBD" },
+      { name: "Acrylic Infill", price: "3000" },
+      { name: "Gel Infill", price: "3000" },
     ],
   },
   {
     title: "Feet Extensions",
     items: [
-      { name: "Acrylic Feet Extensions", price: "TBD" },
-      { name: "Gel Feet Extensions", price: "TBD" },
+      { name: "Toes Acrylic Feet Extensions", price: "4000" },
+      { name: "Toes Gel Feet Extensions", price: "3500" },
     ],
   },
   {
     title: "Feet Infills / Refills",
     items: [
-      { name: "Feet Acrylic Refill", price: "TBD" },
-      { name: "Feet Gel Refill", price: "TBD" },
+      { name: "Feet Acrylic Refill", price: "3000" },
+      { name: "Feet Gel Refill", price: "3000" },
     ],
   },
   {
     title: "Soak-Offs / Removals",
     items: [
-      { name: "Gel Soak-Off", price: "TBD" },
-      { name: "Acrylic Removal", price: "TBD" },
-      { name: "Extension Removal", price: "TBD" },
+      { name: "Gel Soak-Off", price: "400" },
+      { name: "Acrylic Removal", price: "700" },
+      { name: "Extension Removal", price: "500" },
     ],
   },
 ];
@@ -156,7 +156,7 @@ const PriceListSection = ({ onBookService }: Props) => (
                     {item.name}
                   </button>
                   <span className="font-heading text-sm font-semibold text-accent whitespace-nowrap">
-                    KES {item.price}
+                    Kshs {item.price}
                   </span>
                 </li>
               ))}
