@@ -98,6 +98,8 @@ const categories: Category[] = [
     items: [
       { name: "Toes Acrylic Feet Extensions", price: "4000" },
       { name: "Toes Gel Feet Extensions", price: "3500" },
+      { name: "Toes Polygel Feet Extensions", price: "3800" },
+      { name: "Full Set Feet Extensions", price: "5000" },
     ],
   },
   {
@@ -113,6 +115,15 @@ const categories: Category[] = [
       { name: "Gel Soak-Off", price: "400" },
       { name: "Acrylic Removal", price: "700" },
       { name: "Extension Removal", price: "500" },
+    ],
+  },
+  {
+    title: "Add-Ons",
+    items: [
+      { name: "French Tip Add-On", price: "500" },
+      { name: "Nail Art (per nail)", price: "200" },
+      { name: "Chrome / Cat Eye Finish", price: "500" },
+      { name: "Rhinestones / Gems", price: "300" },
     ],
   },
 ];
