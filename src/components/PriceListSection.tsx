@@ -19,7 +19,46 @@ const categories: Category[] = [
       { name: "", price: "" },
     ],
   },
-// ... keep existing code
+  {
+    title: "Overlays on Natural Nails",
+    items: [
+      { name: "Gel Overlay", price: "3000" },
+      { name: "Acrylic Overlay", price: "4000" },
+      { name: "Polygel Overlay", price: "3500" },
+    ],
+  },
+  {
+    title: "Manicures",
+    items: [
+      { name: "Coterie Classic Manicure", price: "2000" },
+      { name: "Coterie Signature Manicure", price: "2800" },
+      { name: "Coterie Pamper Manicure", price: "3500" },
+    ],
+  },
+  {
+    title: "Pedicures",
+    items: [
+      { name: "Coterie Classic Pedicure", price: "2300" },
+      { name: "Coterie Signature Pedicure", price: "3800" },
+      { name: "Coterie Pamper Pedicure", price: "4500" },
+    ],
+  },
+  {
+    title: "Gents Manicures",
+    items: [
+      { name: "Coterie Classic Gents Manicure", price: "2000" },
+      { name: "Coterie Signature Gents Manicure", price: "2500" },
+      { name: "Coterie Pamper Gents Manicure", price: "3500" },
+    ],
+  },
+  {
+    title: "Gents Pedicures",
+    items: [
+      { name: "Coterie Classic Gents Pedicure", price: "2000" },
+      { name: "Coterie Signature Gents Pedicure", price: "3500" },
+      { name: "Coterie Pamper Gents Pedicure", price: "4500" },
+    ],
+  },
   {
     title: "Stick-Ons",
     items: [
@@ -34,12 +73,24 @@ const categories: Category[] = [
       { name: "Colored Acrylic Tips", price: "4500" },
       { name: "Acrylic Ombre Tips", price: "5500" },
       { name: "Red Bottoms Tips ", price: "5500" },
-      { name: "", price: "" },
       { name: "Extra Long Tips Addictional ", price: "2000" },
-      { name: "", price: "" },
     ],
   },
-// ... keep existing code
+  {
+    title: "Nail Moulding & Sculpting",
+    items: [
+      { name: "Acrylic Sculpting", price: "5500" },
+      { name: "Gel Sculpting", price: "5000" },
+      { name: "Acrylic Moulding", price: "4500" },
+    ],
+  },
+  {
+    title: "Infills / Refills",
+    items: [
+      { name: "Acrylic Infill", price: "3000" },
+      { name: "Gel Infill", price: "3000" },
+    ],
+  },
   {
     title: "Feet Extensions",
     items: [
@@ -49,7 +100,21 @@ const categories: Category[] = [
       { name: "Toes Ingrown Removal", price: "1000" },
     ],
   },
-// ... keep existing code
+  {
+    title: "Feet Infills / Refills",
+    items: [
+      { name: "Feet Acrylic Refill", price: "3000" },
+      { name: "Feet Gel Refill", price: "3000" },
+    ],
+  },
+  {
+    title: "Soak-Offs / Removals",
+    items: [
+      { name: "Gel Soak-Off", price: "400" },
+      { name: "Acrylic Removal", price: "700" },
+      { name: "Extension Removal", price: "500" },
+    ],
+  },
   {
     title: "Add-Ons",
     items: [
