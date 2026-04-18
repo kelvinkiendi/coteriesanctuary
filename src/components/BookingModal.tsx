@@ -1,13 +1,50 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { X, Calendar, Clock, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-
 const SERVICES = [
-  "Classic Manicure", "Gel Manicure", "Luxury Spa Manicure",
-  "Classic Pedicure", "Gel Pedicure", "Luxury Spa Pedicure",
-  "Nail Art (per nail)", "Acrylic Full Set", "Acrylic Fill-In",
+  "Regular Polish Application",
+  "Gel Polish Application",
+  "Gel Overlay",
+  "Acrylic Overlay",
+  "Polygel Overlay",
+  "Coterie Classic Manicure",
+  "Coterie Signature Manicure",
+  "Coterie Pamper Manicure",
+  "Coterie Classic Pedicure",
+  "Coterie Signature Pedicure",
+  "Coterie Pamper Pedicure",
+  "Coterie Classic Gents Manicure",
+  "Coterie Signature Gents Manicure",
+  "Coterie Pamper Gents Manicure",
+  "Coterie Classic Gents Pedicure",
+  "Coterie Signature Gents Pedicure",
+  "Coterie Pamper Gents Pedicure",
+  "Pre- Shaped Stick-Ons",
+  "Clear Acrylic Tips",
+  "Colored Acrylic Tips",
+  "Acrylic Ombre Tips",
+  "Red Bottoms Tips",
+  "Extra Long Tips Addictional",
+  "Acrylic Sculpting",
+  "Gel Sculpting",
+  "Acrylic Moulding",
+  "Acrylic Infill",
+  "Gel Infill",
+  "Toes Acrylic Feet Extensions",
+  "Toes Gel Feet Extensions",
+  "Toes Nail Reconstruction",
+  "Toes Ingrown Removal",
+  "Feet Acrylic Refill",
+  "Feet Gel Refill",
+  "Gel Soak-Off",
+  "Acrylic Removal",
+  "Extension Removal",
+  "French Tip Add-On",
+  "Chrome / Cat Eye Finish (full set)",
+  "Rhinestones / Gems(per nail)",
+  "Nail Art is charged separately depending on the art",
 ];
 
 const TIME_SLOTS = [
@@ -36,11 +73,16 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
 
   const refNumber = useMemo(() => `COT-${Date.now().toString(36).toUpperCase()}`, []);
 
-  useState(() => {
-    if (preselectedService) setService(preselectedService);
-  });
+  useEffect(() => {
+    if (open && preselectedService) setService(preselectedService);
+  }, [open, preselectedService]);
 
   if (!open) return null;
+
+  // Ensure preselected service appears in dropdown even if not in list
+  const serviceOptions = preselectedService && !SERVICES.includes(preselectedService)
+    ? [preselectedService, ...SERVICES]
+    : SERVICES;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,7 +163,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
               <select required value={service} onChange={(e) => setService(e.target.value)}
                 className="w-full px-4 py-2.5 bg-background border border-border rounded-sm font-body text-sm focus:outline-none focus:border-accent">
                 <option value="">Select a service</option>
-                {SERVICES.map((s) => <option key={s} value={s}>{s}</option>)}
+                {serviceOptions.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </label>
 
