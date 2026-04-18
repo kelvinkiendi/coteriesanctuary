@@ -35,12 +35,12 @@ const PackagesTeaser = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.07 }}
-            className="bg-card rounded-sm p-6 text-center shadow-elegant hover:shadow-gold transition-shadow"
+            className="hover-elegant hover-shimmer group bg-card rounded-sm p-6 text-center shadow-elegant cursor-pointer"
           >
-            <div className="w-12 h-12 mx-auto rounded-sm bg-accent/10 flex items-center justify-center mb-4">
-              <t.icon className="text-accent" size={22} />
+            <div className="w-12 h-12 mx-auto rounded-sm bg-accent/10 flex items-center justify-center mb-4 transition-all duration-500 group-hover:bg-accent group-hover:rotate-6">
+              <t.icon className="text-accent transition-colors duration-500 group-hover:text-accent-foreground" size={22} />
             </div>
-            <h3 className="font-heading text-lg font-semibold text-primary mb-2">{t.title} Package</h3>
+            <h3 className="font-heading text-lg font-semibold text-primary mb-2 transition-colors group-hover:text-accent">{t.title} Package</h3>
             <p className="font-body text-sm text-foreground/60">{t.desc}</p>
           </motion.div>
         ))}
