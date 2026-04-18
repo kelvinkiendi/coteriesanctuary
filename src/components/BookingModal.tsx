@@ -111,7 +111,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
 
         {step === "form" ? (
           <form onSubmit={handleSubmit} className="p-6 md:p-8">
-            <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-2">Book Now</p>
+            <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-2">Book Your Session</p>
             <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary mb-6">
               Reserve Your Session
             </h2>
