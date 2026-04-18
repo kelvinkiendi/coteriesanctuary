@@ -20,7 +20,7 @@ const PackagesTeaser = () => (
       >
         <p className="font-body text-xs tracking-[0.3em] uppercase text-accent mb-3">Curated Experiences</p>
         <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-          Nail Spa Packages
+          Coterie Packages
         </h2>
         <p className="font-body text-foreground/60 max-w-xl mx-auto">
           Thoughtfully bundled treatments for every occasion — solo escapes, shared moments, and beyond.
