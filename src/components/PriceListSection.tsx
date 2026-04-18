@@ -16,114 +16,47 @@ const categories: Category[] = [
     items: [
       { name: "Regular Polish Application", price: "800" },
       { name: "Gel Polish Application", price: "1000" },
-      { name: " ", price: " " },
+      { name: "", price: "" },
     ],
   },
-  {
-    title: "Overlays on Natural Nails",
-    items: [
-      { name: "Gel Overlay", price: "3000" },
-      { name: "Acrylic Overlay", price: "4000" },
-      { name: "Polygel Overlay", price: "3500" },
-    ],
-  },
-  {
-    title: "Manicures",
-    items: [
-      { name: "Coterie Classic Manicure", price: "2000" },
-      { name: "Coterie Signature Manicure", price: "2800" },
-      { name: "Coterie Pamper Manicure", price: "3500" },
-    ],
-  },
-  {
-    title: "Pedicures",
-    items: [
-      { name: "Coterie Classic Pedicure", price: "2300" },
-      { name: "Coterie Signature Pedicure", price: "3800" },
-      { name: "Coterie Pamper Pedicure", price: "4500" },
-    ],
-  },
-  {
-    title: "Gents Manicures",
-    items: [
-      { name: "Coterie Classic Gents Manicure", price: "2000" },
-      { name: "Coterie Signature Gents Manicure", price: "2500" },
-      { name: "Coterie Pamper Gents Manicure", price: "3500" },
-    ],
-  },
-  {
-    title: "Gents Pedicures",
-    items: [
-      { name: "Coterie Classic Gents Pedicure", price: "2000" },
-      { name: "Coterie Signature Gents Pedicure", price: "3500" },
-      { name: "Coterie Pamper Gents Pedicure", price: "4500" },
-    ],
-  },
+// ... keep existing code
   {
     title: "Stick-Ons",
     items: [
       { name: "Pre- Shaped Stick-Ons", price: "3000" },
-      { name: " ", price: " " },
+      { name: "", price: "" },
     ],
   },
   {
     title: "Tip Extensions",
     items: [
-      { name: "Short Tip Extensions", price: "5500" },
-      { name: "Medium Tip Extensions", price: "5000" },
-      { name: "Long Tip Extensions", price: "4500" },
-      { name: "XL Tip Extensions", price: "6000" },
-      { name: "Stiletto Tip Extensions", price: "6500" },
-      { name: "Coffin Tip Extensions", price: "6500" },
-      { name: "Almond Tip Extensions", price: "6000" },
+      { name: "Clear Acrylic Tips ", price: "4000" },
+      { name: "Colored Acrylic Tips", price: "4500" },
+      { name: "Acrylic Ombre Tips", price: "5500" },
+      { name: "Red Bottoms Tips ", price: "5500" },
+      { name: "", price: "" },
+      { name: "Extra Long Tips Addictional ", price: "2000" },
+      { name: "", price: "" },
     ],
   },
-  {
-    title: "Nail Moulding & Sculpting",
-    items: [
-      { name: "Acrylic Sculpting", price: "5500" },
-      { name: "Gel Sculpting", price: "5000" },
-      { name: "Acrylic Moulding", price: "4500" },
-    ],
-  },
-  {
-    title: "Infills / Refills",
-    items: [
-      { name: "Acrylic Infill", price: "3000" },
-      { name: "Gel Infill", price: "3000" },
-    ],
-  },
+// ... keep existing code
   {
     title: "Feet Extensions",
     items: [
       { name: "Toes Acrylic Feet Extensions", price: "4000" },
       { name: "Toes Gel Feet Extensions", price: "3500" },
-      { name: "Toes Polygel Feet Extensions", price: "3800" },
-      { name: "Full Set Feet Extensions", price: "5000" },
+      { name: "Toes Nail Reconstruction", price: "1000" },
+      { name: "Toes Ingrown Removal", price: "1000" },
     ],
   },
-  {
-    title: "Feet Infills / Refills",
-    items: [
-      { name: "Feet Acrylic Refill", price: "3000" },
-      { name: "Feet Gel Refill", price: "3000" },
-    ],
-  },
-  {
-    title: "Soak-Offs / Removals",
-    items: [
-      { name: "Gel Soak-Off", price: "400" },
-      { name: "Acrylic Removal", price: "700" },
-      { name: "Extension Removal", price: "500" },
-    ],
-  },
+// ... keep existing code
   {
     title: "Add-Ons",
     items: [
-      { name: "French Tip Add-On", price: "500" },
-      { name: "Nail Art (per nail)", price: "200" },
-      { name: "Chrome / Cat Eye Finish", price: "500" },
-      { name: "Rhinestones / Gems", price: "300" },
+      { name: "French Tip Add-On", price: "1000" },
+      { name: "Chrome / Cat Eye Finish (full set)", price: "1000" },
+      { name: "Rhinestones / Gems(per nail)", price: "150" },
+      { name: "Nail Art is charged separately depending on the art", price: "" },
     ],
   },
 ];
@@ -173,7 +106,7 @@ const PriceListSection = ({ onBookService }: Props) => (
                     {item.name}
                   </button>
                   <span className="font-heading text-sm font-semibold text-accent whitespace-nowrap">
-                    Kshs {item.price}
+                    {item.price && item.price.trim() !== "" ? `Kshs ${item.price}` : ""}
                   </span>
                 </li>
               ))}
