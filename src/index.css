@@ -100,7 +100,43 @@
     box-shadow: 0 4px 20px -4px hsl(43 72% 52% / 0.3);
   }
 
+  .shadow-gold-lg {
+    box-shadow: 0 20px 50px -12px hsl(43 72% 52% / 0.45), 0 0 0 1px hsl(43 72% 52% / 0.2);
+  }
+
   .shadow-elegant {
     box-shadow: 0 10px 40px -10px hsl(16 18% 29% / 0.15);
+  }
+
+  /* Elegant interactive hover — refined lift + gold glow */
+  .hover-elegant {
+    @apply transition-all duration-500 ease-out will-change-transform;
+  }
+  .hover-elegant:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px -12px hsl(43 72% 52% / 0.4), 0 0 0 1px hsl(43 72% 52% / 0.25);
+  }
+
+  /* Shimmering gold underline reveal for selectable items */
+  .hover-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .hover-shimmer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      hsl(43 72% 70% / 0.25) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .hover-shimmer:hover::before {
+    transform: translateX(100%);
   }
 }

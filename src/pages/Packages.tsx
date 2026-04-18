@@ -89,10 +89,10 @@ const packages: Package[] = [
 
 const Packages = () => {
   useEffect(() => {
-    document.title = "Nail Spa Packages | COTERIE Nail Sanctuary";
+    document.title = "Coterie Packages | COTERIE Nail Sanctuary";
     const meta = document.querySelector('meta[name="description"]');
     const content =
-      "Curated COTERIE nail spa packages — solo, couples, masculine, and custom experiences in Kilimani, Nairobi.";
+      "Curated Coterie packages — solo, couples, masculine, and custom nail spa experiences in Kilimani, Nairobi.";
     if (meta) meta.setAttribute("content", content);
     else {
       const m = document.createElement("meta");
@@ -129,7 +129,7 @@ const Packages = () => {
               Curated Experiences
             </p>
             <h1 className="font-heading text-4xl md:text-6xl font-bold mb-6">
-              Nail Spa <span className="text-gold-gradient">Packages</span>
+              Coterie <span className="text-gold-gradient">Packages</span>
             </h1>
             <p className="font-body text-primary-foreground/70 leading-relaxed">
               Thoughtfully bundled treatments for every occasion. Choose the experience that suits your moment —
