@@ -84,9 +84,28 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
     ? [preselectedService, ...SERVICES]
     : SERVICES;
 
+  const buildWhatsappUrl = () => {
+    const msg = encodeURIComponent(
+      `✨ New COTERIE Booking ✨\n\n` +
+      `📋 Ref: ${refNumber}\n` +
+      `💅 Service: ${service}\n` +
+      `📅 Date: ${date}\n` +
+      `🕐 Time: ${time}\n` +
+      `👤 Name: ${name}\n` +
+      `📞 Phone: ${phone}\n` +
+      `${email ? `📧 Email: ${email}\n` : ""}` +
+      `${requests ? `📝 Notes: ${requests}\n` : ""}`
+    );
+    return `https://wa.me/254722365861?text=${msg}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+
+    // Open WhatsApp synchronously inside the user gesture so mobile browsers don't block it
+    const whatsappWindow = window.open(buildWhatsappUrl(), "_blank", "noopener,noreferrer");
+
     try {
       const { data, error } = await supabase.functions.invoke("create-booking", {
         body: {
@@ -103,25 +122,8 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
       if (error) throw new Error("Unable to complete your booking.");
       if (data?.error) throw new Error("Unable to complete your booking.");
       setStep("confirmed");
-
-      // Send WhatsApp confirmation to COTERIE
-      const whatsappMsg = encodeURIComponent(
-        `✨ New COTERIE Booking ✨\n\n` +
-        `📋 Ref: ${refNumber}\n` +
-        `💅 Service: ${service}\n` +
-        `📅 Date: ${date}\n` +
-        `🕐 Time: ${time}\n` +
-        `👤 Name: ${name}\n` +
-        `📞 Phone: ${phone}\n` +
-        `${email ? `📧 Email: ${email}\n` : ""}` +
-        `${requests ? `📝 Notes: ${requests}\n` : ""}`
-      );
-      const whatsappLink = document.createElement("a");
-      whatsappLink.href = `https://wa.me/254722365861?text=${whatsappMsg}`;
-      whatsappLink.target = "_blank";
-      whatsappLink.rel = "noopener noreferrer";
-      whatsappLink.click();
     } catch (err: any) {
+      try { whatsappWindow?.close(); } catch {}
       toast({ title: "Booking failed", description: "Unable to complete your booking. Please try again.", variant: "destructive" });
     } finally {
       setSubmitting(false);
@@ -232,9 +234,18 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
               <p className="font-body text-sm"><strong>Phone:</strong> {phone}</p>
             </div>
 
-            <p className="font-body text-xs text-muted-foreground mb-6">
+            <p className="font-body text-xs text-muted-foreground mb-4">
               Your booking details have been sent via WhatsApp. We look forward to seeing you!
             </p>
+
+            <a
+              href={buildWhatsappUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full py-3 mb-3 bg-[#25D366] text-white font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:opacity-90 transition-opacity text-center"
+            >
+              Resend via WhatsApp
+            </a>
 
             <button onClick={handleClose}
               className="w-full py-3 bg-accent text-accent-foreground font-body font-bold text-sm tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors">
