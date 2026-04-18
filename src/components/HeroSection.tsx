@@ -46,7 +46,7 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
         transition={{ duration: 0.8, delay: 0.4 }}
         className="font-heading text-xl md:text-2xl text-primary-foreground/80 italic mb-8 max-w-2xl mx-auto"
       >
-        Nairobi's Quiet Luxury Nail Sanctuary
+        Nairobi's Nail Sanctuary
       </motion.p>
 
       <motion.div
