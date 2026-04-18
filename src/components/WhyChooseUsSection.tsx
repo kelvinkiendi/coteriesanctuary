@@ -36,7 +36,7 @@ const WhyChooseUsSection = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.07 }}
-            className="bg-card rounded-sm p-7 shadow-elegant hover:shadow-gold transition-all duration-300 group"
+            className="bg-card rounded-sm p-7 shadow-elegant hover-elegant hover-shimmer border border-transparent hover:border-accent/40 group"
           >
             <div className="w-12 h-12 rounded-sm bg-accent/10 flex items-center justify-center mb-5 group-hover:bg-accent group-hover:scale-110 transition-all">
               <r.icon className="text-accent group-hover:text-accent-foreground transition-colors" size={22} />

@@ -141,7 +141,7 @@ const PriceListSection = ({ onBookService }: Props) => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.04 }}
-            className="bg-card rounded-sm p-6 shadow-elegant hover:shadow-gold transition-shadow duration-300"
+            className="bg-card rounded-sm p-6 shadow-elegant hover-elegant hover-shimmer border border-transparent hover:border-accent/40"
           >
             <h3 className="font-heading text-lg font-bold text-primary mb-4 pb-3 border-b border-border">
               {cat.title}

@@ -3,10 +3,10 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
-import PriceListSection from "@/components/PriceListSection";
+import ServicesTeaser from "@/components/ServicesTeaser";
 import PackagesTeaser from "@/components/PackagesTeaser";
 import GallerySection from "@/components/GallerySection";
-import ProductsSection from "@/components/ProductsSection";
+import ShopTeaser from "@/components/ShopTeaser";
 import GiftVouchersSection from "@/components/GiftVouchersSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import LocationSection from "@/components/LocationSection";
@@ -30,12 +30,12 @@ const Index = () => {
       <HeroSection onBookNow={() => openBooking()} />
       <AboutSection />
       <WhyChooseUsSection />
-      <PriceListSection onBookService={(s) => openBooking(s)} />
+      <ServicesTeaser />
       <PackagesTeaser />
       <GallerySection />
       <QuickBookSection onBookNow={() => openBooking()} />
       <GiftVouchersSection />
-      <ProductsSection />
+      <ShopTeaser />
       <TestimonialsSection />
       <LocationSection />
       <FooterSection />
