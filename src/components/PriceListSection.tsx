@@ -97,8 +97,8 @@ const PriceListSection = ({ onBookService }: Props) => (
               {cat.title}
             </h3>
             <ul className="space-y-3">
-              {cat.items.map((item) => (
-                <li key={item.name} className="flex items-baseline justify-between gap-3">
+              {cat.items.map((item, idx) => (
+                <li key={`${cat.title}-${idx}`} className="flex items-baseline justify-between gap-3">
                   <button
                     onClick={() => onBookService(item.name)}
                     className="text-left font-body text-sm text-foreground/80 hover:text-accent transition-colors"
