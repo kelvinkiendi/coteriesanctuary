@@ -2,9 +2,12 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import ServicesSection from "@/components/ServicesSection";
+import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import PriceListSection from "@/components/PriceListSection";
+import PackagesTeaser from "@/components/PackagesTeaser";
 import GallerySection from "@/components/GallerySection";
 import ProductsSection from "@/components/ProductsSection";
+import GiftVouchersSection from "@/components/GiftVouchersSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import LocationSection from "@/components/LocationSection";
 import QuickBookSection from "@/components/QuickBookSection";
@@ -26,9 +29,12 @@ const Index = () => {
       <Navbar onBookNow={() => openBooking()} />
       <HeroSection onBookNow={() => openBooking()} />
       <AboutSection />
-      <ServicesSection onBookService={(s) => openBooking(s)} />
+      <WhyChooseUsSection />
+      <PriceListSection onBookService={(s) => openBooking(s)} />
+      <PackagesTeaser />
       <GallerySection />
       <QuickBookSection onBookNow={() => openBooking()} />
+      <GiftVouchersSection />
       <ProductsSection />
       <TestimonialsSection />
       <LocationSection />

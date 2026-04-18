@@ -18,13 +18,23 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
   const links = [
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
+    { label: "Packages", href: "/packages", route: true },
+    { label: "Vouchers", href: "#vouchers" },
     { label: "Gallery", href: "#gallery" },
-    { label: "Products", href: "#products" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isRoute?: boolean) => {
+    if (isRoute) {
+      // Let the browser navigate via the anchor; just close the menu.
+      setMobileOpen(false);
+      return;
+    }
     e.preventDefault();
+    if (window.location.pathname !== "/") {
+      window.location.href = `/${href}`;
+      return;
+    }
     const el = document.querySelector(href);
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
@@ -54,7 +64,7 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
             <a
               key={l.href}
               href={l.href}
-              onClick={(e) => handleNavClick(e, l.href)}
+              onClick={(e) => handleNavClick(e, l.href, l.route)}
               className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors"
             >
               {l.label}
@@ -88,7 +98,7 @@ const Navbar = ({ onBookNow }: NavbarProps) => {
               <a
                 key={l.href}
                 href={l.href}
-                onClick={(e) => handleNavClick(e, l.href)}
+                onClick={(e) => handleNavClick(e, l.href, l.route)}
                 className="font-body text-sm tracking-widest uppercase text-foreground/70 hover:text-accent transition-colors py-2"
               >
                 {l.label}

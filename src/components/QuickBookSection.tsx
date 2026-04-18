@@ -29,7 +29,7 @@ const QuickBookSection = ({ onBookNow }: QuickBookSectionProps) => (
           onClick={onBookNow}
           className="px-10 py-4 bg-accent text-accent-foreground font-body font-bold text-base tracking-widest uppercase rounded-sm shadow-gold hover:bg-gold-dark transition-colors"
         >
-          Book Your Appointment
+          Book Your Session
         </motion.button>
       </motion.div>
     </div>
