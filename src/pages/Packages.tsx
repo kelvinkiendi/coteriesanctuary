@@ -30,7 +30,7 @@ const packages: Package[] = [
       "Hot towel finish",
       "Polish of choice (regular or gel)",
     ],
-    duration: "Approx. 2 hours",
+    duration: "Approx. 4 hours",
     price: "7,500",
   },
   {
@@ -48,7 +48,7 @@ const packages: Package[] = [
       "Polish of choice for each guest",
       "Complimentary nail art accent (1 nail each)",
     ],
-    duration: "Approx. 2 hours",
+    duration: "Approx. 4 hours",
     price: "12,500",
   },
   {
@@ -65,7 +65,7 @@ const packages: Package[] = [
       "Matte buff finish",
       "Hot towel treatment",
     ],
-    duration: "Approx. 90 minutes",
+    duration: "Approx. 2 Hours",
     price: "5,500",
   },
   {
@@ -83,7 +83,7 @@ const packages: Package[] = [
       "Bridal & event styling available",
     ],
     duration: "Flexible",
-    price: "From 4,500",
+    price: "4,500",
   },
 ];
 
