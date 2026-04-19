@@ -86,7 +86,8 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
 
   const buildWhatsappUrl = () => {
     const msg = encodeURIComponent(
-      `✨ New COTERIE Booking ✨\n\n` +
+      `🔔 You have a new booking!\n\n` +
+      `✨ COTERIE Sanctuary ✨\n\n` +
       `📋 Ref: ${refNumber}\n` +
       `💅 Service: ${service}\n` +
       `📅 Date: ${date}\n` +
@@ -122,6 +123,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
       if (error) throw new Error("Unable to complete your booking.");
       if (data?.error) throw new Error("Unable to complete your booking.");
       setStep("confirmed");
+      toast({ title: "✅ Booking Successful!", description: `Your appointment is confirmed. Ref: ${refNumber}` });
     } catch (err: any) {
       try { whatsappWindow?.close(); } catch {}
       toast({ title: "Booking failed", description: "Unable to complete your booking. Please try again.", variant: "destructive" });
