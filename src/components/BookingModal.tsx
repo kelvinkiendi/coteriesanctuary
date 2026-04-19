@@ -86,7 +86,8 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
 
   const buildWhatsappUrl = () => {
     const msg = encodeURIComponent(
-      `✨ New COTERIE Booking ✨\n\n` +
+      `🔔 You have a new booking!\n\n` +
+      `✨ COTERIE Sanctuary ✨\n\n` +
       `📋 Ref: ${refNumber}\n` +
       `💅 Service: ${service}\n` +
       `📅 Date: ${date}\n` +
