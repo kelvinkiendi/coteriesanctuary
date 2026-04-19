@@ -6,9 +6,25 @@ const corsHeaders = {
 };
 
 const SERVICES = [
-  "Classic Manicure", "Gel Manicure", "Luxury Spa Manicure",
-  "Classic Pedicure", "Gel Pedicure", "Luxury Spa Pedicure",
-  "Nail Art (per nail)", "Acrylic Full Set", "Acrylic Fill-In",
+  "Regular Polish Application", "Gel Polish Application", "Gel Overlay",
+  "Acrylic Overlay", "Polygel Overlay",
+  "Coterie Classic Manicure", "Coterie Signature Manicure", "Coterie Pamper Manicure",
+  "Coterie Classic Pedicure", "Coterie Signature Pedicure", "Coterie Pamper Pedicure",
+  "Coterie Classic Gents Manicure", "Coterie Signature Gents Manicure", "Coterie Pamper Gents Manicure",
+  "Coterie Classic Gents Pedicure", "Coterie Signature Gents Pedicure", "Coterie Pamper Gents Pedicure",
+  "Pre- Shaped Stick-Ons", "Clear Acrylic Tips", "Colored Acrylic Tips",
+  "Acrylic Ombre Tips", "Red Bottoms Tips", "Extra Long Tips Addictional",
+  "Acrylic Sculpting", "Gel Sculpting", "Acrylic Moulding",
+  "Acrylic Infill", "Gel Infill",
+  "Toes Acrylic Feet Extensions", "Toes Gel Feet Extensions",
+  "Toes Nail Reconstruction", "Toes Ingrown Removal",
+  "Feet Acrylic Refill", "Feet Gel Refill",
+  "Gel Soak-Off", "Acrylic Removal", "Extension Removal",
+  "French Tip Add-On", "Chrome / Cat Eye Finish (full set)",
+  "Rhinestones / Gems(per nail)",
+  "Nail Art is charged separately depending on the art",
+  // Package names from Packages page
+  "Solo Package", "Couples Package", "Masculine Package", "Custom Package",
 ];
 
 const TIME_SLOTS = [
