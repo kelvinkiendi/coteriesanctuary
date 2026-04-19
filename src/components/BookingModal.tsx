@@ -2,56 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { X, Calendar, Clock, CheckCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-
-const SERVICES = [
-  "Regular Polish Application",
-  "Gel Polish Application",
-  "Gel Overlay",
-  "Acrylic Overlay",
-  "Polygel Overlay",
-  "Coterie Classic Manicure",
-  "Coterie Signature Manicure",
-  "Coterie Pamper Manicure",
-  "Coterie Classic Pedicure",
-  "Coterie Signature Pedicure",
-  "Coterie Pamper Pedicure",
-  "Coterie Classic Gents Manicure",
-  "Coterie Signature Gents Manicure",
-  "Coterie Pamper Gents Manicure",
-  "Coterie Classic Gents Pedicure",
-  "Coterie Signature Gents Pedicure",
-  "Coterie Pamper Gents Pedicure",
-  "Pre- Shaped Stick-Ons",
-  "Clear Acrylic Tips",
-  "Colored Acrylic Tips",
-  "Acrylic Ombre Tips",
-  "Red Bottoms Tips",
-  "Extra Long Tips Addictional",
-  "Acrylic Sculpting",
-  "Gel Sculpting",
-  "Acrylic Moulding",
-  "Acrylic Infill",
-  "Gel Infill",
-  "Toes Acrylic Feet Extensions",
-  "Toes Gel Feet Extensions",
-  "Toes Nail Reconstruction",
-  "Toes Ingrown Removal",
-  "Feet Acrylic Refill",
-  "Feet Gel Refill",
-  "Gel Soak-Off",
-  "Acrylic Removal",
-  "Extension Removal",
-  "French Tip Add-On",
-  "Chrome / Cat Eye Finish (full set)",
-  "Rhinestones / Gems(per nail)",
-  "Nail Art is charged separately depending on the art",
-];
-
-const TIME_SLOTS = [
-  "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM",
-  "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
-  "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM",
-];
+import { SERVICES, TIME_SLOTS } from "@/lib/services";
 
 interface BookingModalProps {
   open: boolean;
@@ -80,7 +31,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
   if (!open) return null;
 
   // Ensure preselected service appears in dropdown even if not in list
-  const serviceOptions = preselectedService && !SERVICES.includes(preselectedService)
+  const serviceOptions: readonly string[] = preselectedService && !(SERVICES as readonly string[]).includes(preselectedService)
     ? [preselectedService, ...SERVICES]
     : SERVICES;
 
