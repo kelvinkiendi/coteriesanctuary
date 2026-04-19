@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import cuticleImg from "@/assets/products-cuticle.jpg";
-import shoehornImg from "@/assets/products-shoehorn.jpg";
-import glovesImg from "@/assets/products-gloves.jpg";
-import claspImg from "@/assets/products-clasp.jpg";
+import shoehornImg from "@/assets/products-shoehorn.png";
+import glovesImg from "@/assets/products-gloves.png";
+import claspImg from "@/assets/products-clasp.png";
 
 const products = [
   { name: "Cuticle Oils", desc: "Nourishing blend for healthy, hydrated cuticles.", price: "800", img: cuticleImg },
