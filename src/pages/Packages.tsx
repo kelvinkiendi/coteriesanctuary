@@ -176,7 +176,10 @@ const Packages = () => {
                 <div className="flex items-end justify-between pt-5 border-t border-border">
                   <div>
                     <p className="font-body text-xs uppercase tracking-wider text-muted-foreground">{pkg.duration}</p>
-                    <p className="font-heading text-2xl font-bold text-accent">KES {pkg.price}</p>
+                    <p className="font-heading text-2xl font-bold text-accent">
+                      {pkg.id === "custom" ? "From Kshs " : "Kshs  "}
+                      {pkg.price}
+                    </p>
                   </div>
                   <a
                     href={bookViaWhatsApp(pkg.name)}
