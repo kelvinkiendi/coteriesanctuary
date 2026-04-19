@@ -30,7 +30,7 @@ const packages: Package[] = [
       "Hot towel finish",
       "Polish of choice (regular or gel)",
     ],
-    duration: "Approx. 2 hours",
+    duration: "Approx. 4 hours",
     price: "7,500",
   },
   {
@@ -48,7 +48,7 @@ const packages: Package[] = [
       "Polish of choice for each guest",
       "Complimentary nail art accent (1 nail each)",
     ],
-    duration: "Approx. 2 hours",
+    duration: "Approx. 4 hours",
     price: "12,500",
   },
   {
@@ -65,7 +65,7 @@ const packages: Package[] = [
       "Matte buff finish",
       "Hot towel treatment",
     ],
-    duration: "Approx. 90 minutes",
+    duration: "Approx. 2 Hours",
     price: "5,500",
   },
   {
@@ -83,7 +83,7 @@ const packages: Package[] = [
       "Bridal & event styling available",
     ],
     duration: "Flexible",
-    price: "From 4,500",
+    price: "4,500",
   },
 ];
 
@@ -176,7 +176,10 @@ const Packages = () => {
                 <div className="flex items-end justify-between pt-5 border-t border-border">
                   <div>
                     <p className="font-body text-xs uppercase tracking-wider text-muted-foreground">{pkg.duration}</p>
-                    <p className="font-heading text-2xl font-bold text-accent">KES {pkg.price}</p>
+                    <p className="font-heading text-2xl font-bold text-accent">
+                      {pkg.id === "custom" ? "From Kshs " : "Kshs  "}
+                      {pkg.price}
+                    </p>
                   </div>
                   <a
                     href={bookViaWhatsApp(pkg.name)}

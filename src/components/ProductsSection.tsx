@@ -6,10 +6,10 @@ import glovesImg from "@/assets/products-gloves.png";
 import claspImg from "@/assets/products-clasp.png";
 
 const products = [
-  { name: "Cuticle Oils", desc: "Nourishing blend for healthy, hydrated cuticles.", price: "800", img: cuticleImg },
-  { name: "Shoe Horns", desc: "Elegant, durable shoe horns for everyday convenience.", price: "600", img: shoehornImg },
-  { name: "Kitchen Washing Gloves", desc: "Protect your manicure while tackling daily chores.", price: "400", img: glovesImg },
-  { name: "Magnetic Necklace Clasps", desc: "Effortless elegance — fasten necklaces with one hand.", price: "1,200", img: claspImg },
+  { name: "Cuticle Oils", desc: "Nourishing blend for healthy, hydrated cuticles.", price: "1000", img: cuticleImg },
+  { name: "Shoe Horns", desc: "Elegant, durable shoe horns for everyday convenience.", price: "900", img: shoehornImg },
+  { name: "Kitchen Washing Gloves", desc: "Protect your manicure while tackling daily chores.", price: "1500", img: glovesImg },
+  { name: "Magnetic Necklace Clasps", desc: "Effortless elegance — fasten necklaces with one hand.", price: "1000", img: claspImg },
 ];
 
 const ProductsSection = () => {
@@ -58,7 +58,7 @@ const ProductsSection = () => {
                 <h3 className="font-heading font-semibold text-primary mb-1">{p.name}</h3>
                 <p className="font-body text-sm text-foreground/60 mb-3">{p.desc}</p>
                 <div className="flex items-center justify-between">
-                  <span className="font-heading text-lg font-bold text-accent">KES {p.price}</span>
+                  <span className="font-heading text-lg font-bold text-accent">Kshs  {p.price}</span>
                   <a
                     href={whatsappLink(p.name)}
                     target="_blank"
