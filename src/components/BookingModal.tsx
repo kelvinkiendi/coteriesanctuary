@@ -31,7 +31,7 @@ const BookingModal = ({ open, onClose, preselectedService }: BookingModalProps) 
   if (!open) return null;
 
   // Ensure preselected service appears in dropdown even if not in list
-  const serviceOptions = preselectedService && !SERVICES.includes(preselectedService)
+  const serviceOptions: readonly string[] = preselectedService && !(SERVICES as readonly string[]).includes(preselectedService)
     ? [preselectedService, ...SERVICES]
     : SERVICES;
 
