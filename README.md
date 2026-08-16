@@ -1,44 +1,51 @@
-# Circle Founder Sanctuary
+# COTERIE Sanctuary POS
 
-**Stack:** PostgreSQL · Supabase · React · TypeScript · Tailwind CSS
+**Stack:** PostgreSQL · Supabase Edge Functions · MPesa Daraja API · JWT/RBAC · React · TypeScript
 
-B2B membership management system for COTERIE Nail Sanctuary's exclusive **Founder Circle** — 
-a luxury tiered program limited to 25 members. Handles enrollment, perks tracking, appointment 
-scheduling, product pre-launch access, surprise moments, and founder brunch events.
+Full-stack point-of-sale system for COTERIE Nail Sanctuary, a premium nail studio in Kilimani, Nairobi. 
+This repo contains the complete operational platform — from PostgreSQL database design and MPesa 
+payment integration to role-based access control and real-time staff analytics.
 
 ---
 
 ## 🏗 Backend Architecture
 
 ### Database Layer (PostgreSQL + Supabase)
-- **9 normalized tables** with foreign key relationships
-- Row Level Security (RLS) policies for data isolation
-- Automated triggers for perks expiry and engagement scoring
+- Normalized schema: `clients`, `appointments`, `services`, `payments`, `staff`, `inventory`, `memberships`
+- Row Level Security (RLS) policies per role
+- PostgreSQL triggers for automated commission and inventory management
 
-### Core Tables
+### API Layer (Supabase Edge Functions)
+| Function | Purpose |
+|----------|---------|
+| `mpesa-stk-push` | Initiates MPesa STK push to client phone |
+| `payment-callback` | Handles Daraja payment confirmation webhook |
+| `auth-role-claim` | Returns JWT role claims for RBAC middleware |
 
-| Table | Purpose |
-|-------|---------|
-| `clients` | Member profiles with client type (regular/founder), contact info, status |
-| `founder_circle` | Enrollment tracking, payment status, term dates, founder number (1-25) |
-| `appointments` | Specialized booking types: weekly refresh, gel rescue, travel touchup, birthday sanctuary, emergency |
-| `perks_usage` | Perk redemption tracking with week/month allocation and expiry |
-| `surprise_moments_log` | Documented surprise rewards and random upgrades |
-| `products` | Product catalog with founder pricing (cost + 20%), prelaunch access |
-| `founder_purchases` | Purchase history with prelaunch window tracking |
-| `founder_brunch_events` | Exclusive event management |
-| `brunch_attendance` | RSVP tracking with dietary notes and photo consent |
+### Payment Integration
+- Safaricom Daraja API v2 (MPesa STK Push & C2B)
+- Idempotency handling to prevent duplicate charges
+- Transaction ledger for audit trails and reconciliation
 
-### Business Logic
-- **Founder limit enforcement:** Hard cap of 25 active founders
-- **Perk allocation:** Weekly refreshes, travel touchups, surprise moments auto-assigned
-- **Engagement scoring:** Automated scoring based on appointment frequency and purchases
-- **Referral tracking:** Referral count linked to founder rewards
+### Auth & Authorization
+- JWT-based authentication with Supabase Auth
+- Custom role claims: `owner`, `admin`, `technician`, `receptionist`
+- Route-level permission enforcement
 
 ---
 
 ## 📁 Project Structure
 
+---
+```
+├── src/                    # Frontend (React + TypeScript + Tailwind)
+├── supabase/
+│   ├── migrations/         # PostgreSQL schema & RLS policies
+│   └── functions/          # Edge Functions (MPesa, auth, webhooks)
+├── public/                 # Static assets
+└── package.json
+
+```
 
 ---
 
@@ -47,9 +54,10 @@ scheduling, product pre-launch access, surprise moments, and founder brunch even
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React, TypeScript, Tailwind CSS, Vite |
-| UI Theme | Custom brown (#5D4037) & cream (#F5F5DC) with gold accents |
 | Database | PostgreSQL (Supabase) |
-| Auth | Supabase Auth |
+| Serverless API | Supabase Edge Functions (Deno/TypeScript) |
+| Authentication | Supabase Auth (JWT + custom role claims) |
+| Payments | Safaricom Daraja API v2 |
 | Deployment | Supabase Cloud |
 
 ---
@@ -58,10 +66,16 @@ scheduling, product pre-launch access, surprise moments, and founder brunch even
 
 ```bash
 # Clone
-git clone https://github.com/kelvinkiendi/circle-founder-sanctuary.git
+git clone https://github.com/kelvinkiendi/coteriesanctuary.git
 
 # Install dependencies
 npm install
 
 # Start dev server
 npm run dev
+
+# Link to Supabase project
+npx supabase link --project-ref nahnjpdydgzmfuwfhfzn
+
+# Run migrations
+npx supabase db reset
