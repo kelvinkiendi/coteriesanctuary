@@ -36,7 +36,6 @@ payment integration to role-based access control and real-time staff analytics.
 
 ## 📁 Project Structure
 
----
 ```
 ├── src/                    # Frontend (React + TypeScript + Tailwind)
 ├── supabase/
@@ -47,7 +46,7 @@ payment integration to role-based access control and real-time staff analytics.
 
 ```
 
----
+
 
 ## 🛠 Tech Stack
 
