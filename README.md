@@ -1,3 +1,2 @@
-COTERIE Sanctuary POS is a custom-built, full-stack business operating system designed to power the daily operations of COTERIE Nail Sanctuary — from client check-in to payment settlement. Built with a focus on automation, role-based access control, and premium client experience, this POS replaces generic retail software with a solution tailored specifically for high-end beauty service workflows.
-The system handles everything from appointment scheduling, service catalog management, and real-time sales tracking to automated MPesa STK push payments, staff clock-in/clock-out, and tiered membership enrollment (including the COTERIE Founder Circle). It is architected to support multi-role access — Owner, Admin, Nail Technician, and Receptionist — each with scoped permissions and dedicated dashboard views.
-This repository contains the complete source code, database schema, edge functions, and deployment configuration for the COTERIE Sanctuary POS ecosystem.
+
+
