@@ -1,37 +1,67 @@
-# COTERIE Sanctuary POS
+# Circle Founder Sanctuary
 
-**Stack:** PostgreSQL · Supabase Edge Functions · MPesa Daraja API · JWT/RBAC · React · TypeScript
+**Stack:** PostgreSQL · Supabase · React · TypeScript · Tailwind CSS
 
-Full-stack point-of-sale system for COTERIE Nail Sanctuary, a premium nail studio in Kilimani, Nairobi. 
-This repo contains the complete operational platform — from PostgreSQL database design and MPesa 
-payment integration to role-based access control and real-time staff analytics.
+B2B membership management system for COTERIE Nail Sanctuary's exclusive **Founder Circle** — 
+a luxury tiered program limited to 25 members. Handles enrollment, perks tracking, appointment 
+scheduling, product pre-launch access, surprise moments, and founder brunch events.
 
 ---
 
 ## 🏗 Backend Architecture
 
 ### Database Layer (PostgreSQL + Supabase)
-- Normalized schema: `clients`, `appointments`, `services`, `payments`, `staff`, `inventory`, `memberships`
-- Row Level Security (RLS) policies per role
-- PostgreSQL triggers for automated commission and inventory management
+- **9 normalized tables** with foreign key relationships
+- Row Level Security (RLS) policies for data isolation
+- Automated triggers for perks expiry and engagement scoring
 
-### API Layer (Supabase Edge Functions)
-| Function | Purpose |
-|----------|---------|
-| `mpesa-stk-push` | Initiates MPesa STK push to client phone |
-| `payment-callback` | Handles Daraja payment confirmation webhook |
-| `auth-role-claim` | Returns JWT role claims for RBAC middleware |
+### Core Tables
 
-### Payment Integration
-- Safaricom Daraja API v2 (MPesa STK Push & C2B)
-- Idempotency handling to prevent duplicate charges
-- Transaction ledger for audit trails and reconciliation
+| Table | Purpose |
+|-------|---------|
+| `clients` | Member profiles with client type (regular/founder), contact info, status |
+| `founder_circle` | Enrollment tracking, payment status, term dates, founder number (1-25) |
+| `appointments` | Specialized booking types: weekly refresh, gel rescue, travel touchup, birthday sanctuary, emergency |
+| `perks_usage` | Perk redemption tracking with week/month allocation and expiry |
+| `surprise_moments_log` | Documented surprise rewards and random upgrades |
+| `products` | Product catalog with founder pricing (cost + 20%), prelaunch access |
+| `founder_purchases` | Purchase history with prelaunch window tracking |
+| `founder_brunch_events` | Exclusive event management |
+| `brunch_attendance` | RSVP tracking with dietary notes and photo consent |
 
-### Auth & Authorization
-- JWT-based authentication with Supabase Auth
-- Custom role claims: `owner`, `admin`, `technician`, `receptionist`
-- Route-level permission enforcement
+### Business Logic
+- **Founder limit enforcement:** Hard cap of 25 active founders
+- **Perk allocation:** Weekly refreshes, travel touchups, surprise moments auto-assigned
+- **Engagement scoring:** Automated scoring based on appointment frequency and purchases
+- **Referral tracking:** Referral count linked to founder rewards
 
 ---
 
 ## 📁 Project Structure
+
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React, TypeScript, Tailwind CSS, Vite |
+| UI Theme | Custom brown (#5D4037) & cream (#F5F5DC) with gold accents |
+| Database | PostgreSQL (Supabase) |
+| Auth | Supabase Auth |
+| Deployment | Supabase Cloud |
+
+---
+
+## 🚀 Getting Started
+
+```bash
+# Clone
+git clone https://github.com/kelvinkiendi/circle-founder-sanctuary.git
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
