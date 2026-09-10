@@ -56,7 +56,7 @@ const HeroSection = ({ onBookNow }: HeroSectionProps) => (
         className="flex items-center justify-center gap-2 text-gold-light font-body text-sm md:text-base mb-10"
       >
         <MapPin size={16} />
-        <span>Shujaah Mall, Opp. Adlife Plaza, Kilimani</span>
+        <span>Chaka Court, Kilimani</span>
       </motion.div>
 
       <motion.button
