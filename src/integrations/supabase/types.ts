@@ -34,40 +34,94 @@ export type Database = {
       }
       bookings: {
         Row: {
+          appointment_date: string | null
+          calendar_event_id: string | null
+          calendar_sync_status: string
           created_at: string
           date: string
+          duration_minutes: number
           email: string | null
+          end_time: string | null
           id: string
+          nail_tech: string
           name: string
+          payment_status: string
           phone: string
           ref_number: string
           requests: string | null
           service: string
+          start_time: string | null
+          status: string
           time: string
+          updated_at: string
         }
         Insert: {
+          appointment_date?: string | null
+          calendar_event_id?: string | null
+          calendar_sync_status?: string
           created_at?: string
           date: string
+          duration_minutes?: number
           email?: string | null
+          end_time?: string | null
           id?: string
+          nail_tech?: string
           name: string
+          payment_status?: string
           phone: string
           ref_number: string
           requests?: string | null
           service: string
+          start_time?: string | null
+          status?: string
           time: string
+          updated_at?: string
         }
         Update: {
+          appointment_date?: string | null
+          calendar_event_id?: string | null
+          calendar_sync_status?: string
           created_at?: string
           date?: string
+          duration_minutes?: number
           email?: string | null
+          end_time?: string | null
           id?: string
+          nail_tech?: string
           name?: string
+          payment_status?: string
           phone?: string
           ref_number?: string
           requests?: string | null
           service?: string
+          start_time?: string | null
+          status?: string
           time?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      nail_techs: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
         }
         Relationships: []
       }
