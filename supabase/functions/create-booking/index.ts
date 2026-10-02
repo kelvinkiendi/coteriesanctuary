@@ -1,106 +1,84 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
-import { SERVICES, TIME_SLOTS } from "../_shared/services.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+import { createClient } from "npm:@supabase/supabase-js@2";
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { SERVICES, TIME_SLOTS, serviceDuration, slotToMinutes, minutesToHHMM, CLOSE_MINUTES } from "../_shared/services.ts";
+import { freeSlots, activeTechs, nairobiToday } from "../_shared/slots.ts";
+import { syncBooking } from "../_shared/calendar.ts";
+import { notifyBookingCreated } from "../_shared/notify.ts";
 
 const MAX_BOOKINGS_PER_HOUR = 5;
-
-function isValidDate(dateStr: string): boolean {
-  const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) return false;
-  const d = new Date(dateStr + "T00:00:00");
-  if (isNaN(d.getTime())) return false;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  return d >= today;
-}
+const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
-  }
-
-  const supabaseAdmin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  );
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
   try {
-    // Rate limiting by IP
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-
-    const { count } = await supabaseAdmin
-      .from("booking_rate_limits")
-      .select("*", { count: "exact", head: true })
-      .eq("ip_address", ip)
-      .gte("created_at", oneHourAgo);
-
-    if ((count ?? 0) >= MAX_BOOKINGS_PER_HOUR) {
-      return new Response(JSON.stringify({ error: "Too many booking requests. Please try again later." }), {
-        status: 429,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     const body = await req.json();
-    const { service, date, time, name, phone, email, requests, ref_number } = body;
+    const { service, date, time, name, phone, email, requests, ref_number, nail_tech } = body;
 
     const errors: string[] = [];
-    if (!service || !SERVICES.includes(service)) errors.push("Invalid service selected.");
-    if (!date || !isValidDate(date)) errors.push("Invalid or past date.");
-    if (!time || !TIME_SLOTS.includes(time)) errors.push("Invalid time slot.");
-    if (!name || typeof name !== "string" || name.trim().length < 1 || name.trim().length > 100) errors.push("Name is required (max 100 characters).");
-    if (!phone || typeof phone !== "string" || phone.trim().length < 6 || phone.trim().length > 20) errors.push("Valid phone number is required.");
-    if (email && (typeof email !== "string" || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) errors.push("Invalid email address.");
-    if (requests && (typeof requests !== "string" || requests.length > 500)) errors.push("Special requests must be under 500 characters.");
-    if (!ref_number || typeof ref_number !== "string" || ref_number.length > 30) errors.push("Invalid reference number.");
+    if (!service || !SERVICES.includes(service)) errors.push("Invalid service.");
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || date < nairobiToday().date) errors.push("Invalid date.");
+    if (!time || !TIME_SLOTS.includes(time)) errors.push("Invalid time.");
+    if (typeof name !== "string" || name.trim().length < 1 || name.trim().length > 100) errors.push("Invalid name.");
+    if (typeof phone !== "string" || phone.trim().length < 6 || phone.trim().length > 20) errors.push("Invalid phone.");
+    if (email && (typeof email !== "string" || email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) errors.push("Invalid email.");
+    if (requests && (typeof requests !== "string" || requests.length > 500)) errors.push("Notes too long.");
+    if (typeof ref_number !== "string" || !/^COT-[A-Z0-9]{4,24}$/.test(ref_number)) errors.push("Invalid reference.");
+    if (errors.length) return json({ error: errors.join(" ") }, 400);
 
-    if (errors.length > 0) {
-      return new Response(JSON.stringify({ error: errors.join(" ") }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+    // Idempotency: same reference already saved (e.g. retry/refresh) -> return it, don't duplicate
+    const { data: existing } = await admin.from("bookings").select("*").eq("ref_number", ref_number).maybeSingle();
+    if (existing) return json({ success: true, booking: publicView(existing) });
+
+    // Rate limit
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const { count } = await admin.from("booking_rate_limits").select("*", { count: "exact", head: true })
+      .eq("ip_address", ip).gte("created_at", new Date(Date.now() - 3600_000).toISOString());
+    if ((count ?? 0) >= MAX_BOOKINGS_PER_HOUR) return json({ error: "rate_limited" }, 429);
+
+    const techs = await activeTechs(admin);
+    const duration = serviceDuration(service);
+    const start = slotToMinutes(time), end = start + duration;
+    if (end > CLOSE_MINUTES) return json({ error: "slot_taken" }, 409);
+
+    const candidates = nail_tech && nail_tech !== "any" ? [nail_tech].filter((t) => techs.includes(t)) : techs;
+    if (!candidates.length) return json({ error: "Invalid nail tech." }, 400);
+    const free = (await freeSlots(admin, date, candidates, duration))[time] || [];
+
+    let bookingId: string | null = null;
+    for (const tech of free) {
+      const { data, error } = await admin.rpc("book_slot", {
+        _service: service, _date: date, _start: minutesToHHMM(start), _end: minutesToHHMM(end), _duration: duration,
+        _tech: tech, _name: name.trim(), _phone: phone.trim(), _email: email?.trim() || null,
+        _requests: requests?.trim() || null, _ref: ref_number, _exclude: null,
       });
+      if (!error) { bookingId = data; break; }
+      if (!String(error.message).includes("SLOT_TAKEN") && error.code !== "23505") {
+        console.error("book_slot error", JSON.stringify(error));
+        return json({ error: "save_failed" }, 500);
+      }
     }
+    if (!bookingId) return json({ error: "slot_taken" }, 409);
 
-    // Record this request for rate limiting
-    await supabaseAdmin.from("booking_rate_limits").insert({ ip_address: ip });
+    await admin.from("booking_rate_limits").insert({ ip_address: ip });
+    await admin.from("booking_rate_limits").delete().lt("created_at", new Date(Date.now() - 7200_000).toISOString());
 
-    // Clean up old rate limit entries (older than 2 hours)
-    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
-    await supabaseAdmin.from("booking_rate_limits").delete().lt("created_at", twoHoursAgo);
+    const { data: booking } = await admin.from("bookings").select("*").eq("id", bookingId).single();
+    const sync = await syncBooking(booking);
+    await admin.from("bookings").update(sync).eq("id", bookingId);
+    await notifyBookingCreated(booking);
 
-    const { error } = await supabaseAdmin.from("bookings").insert({
-      service: service.trim(),
-      date,
-      time,
-      name: name.trim(),
-      phone: phone.trim(),
-      email: email?.trim() || null,
-      requests: requests?.trim() || null,
-      ref_number,
-    });
-
-    if (error) {
-      console.error("Booking insert error:", JSON.stringify(error));
-      return new Response(JSON.stringify({ error: "Unable to save booking." }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ success: true, booking: publicView({ ...booking, ...sync }) });
   } catch (err) {
     console.error("Booking function error:", err);
-    return new Response(JSON.stringify({ error: "Unable to process booking." }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ error: "server_error" }, 500);
   }
 });
+
+function publicView(b: any) {
+  return {
+    ref_number: b.ref_number, service: b.service, nail_tech: b.nail_tech, date: b.appointment_date,
+    start_time: String(b.start_time).slice(0, 5), end_time: String(b.end_time).slice(0, 5), status: b.status,
+  };
+}
