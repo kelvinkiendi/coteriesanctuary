@@ -130,7 +130,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      book_slot: {
+        Args: {
+          _date: string
+          _duration: number
+          _email: string
+          _end: string
+          _exclude?: string
+          _name: string
+          _phone: string
+          _ref: string
+          _requests: string
+          _service: string
+          _start: string
+          _tech: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

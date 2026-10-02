@@ -57,3 +57,44 @@ export const TIME_SLOTS = [
   "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM",
   "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM", "5:00 PM", "5:30 PM", "6:00 PM",
 ] as const;
+
+// ---- Scheduling ----
+export const TIMEZONE = "Africa/Nairobi";
+export const OPEN_MINUTES = 9 * 60; // 9:00 AM
+export const CLOSE_MINUTES = 19 * 60; // 7:00 PM (latest end time)
+
+/** Default duration (minutes) per service, derived from its name. */
+export function serviceDuration(service: string): number {
+  const s = service.toLowerCase();
+  if (s.includes("solo package") || s.includes("couples package")) return 240;
+  if (s.includes("masculine package")) return 120;
+  if (s.includes("custom package")) return 120;
+  if (s.includes("pamper")) return 90;
+  if (s.includes("signature")) return 75;
+  if (s.includes("classic")) return 60;
+  if (s.includes("tips") || s.includes("sculpting") || s.includes("moulding") || s.includes("extensions") || s.includes("reconstruction")) return 120;
+  if (s.includes("infill") || s.includes("refill") || s.includes("overlay")) return 90;
+  if (s.includes("removal") || s.includes("soak-off") || s.includes("add-on") || s.includes("rhinestones") || s.includes("chrome") || s.includes("nail art")) return 30;
+  return 60;
+}
+
+export function slotToMinutes(slot: string): number {
+  const m = slot.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!m) return NaN;
+  let h = parseInt(m[1], 10) % 12;
+  if (m[3].toUpperCase() === "PM") h += 12;
+  return h * 60 + parseInt(m[2], 10);
+}
+
+export function minutesToHHMM(min: number): string {
+  return `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`;
+}
+
+export function minutesToLabel(min: number): string {
+  const h = Math.floor(min / 60), m = min % 60;
+  const ap = h >= 12 ? "PM" : "AM";
+  return `${((h + 11) % 12) + 1}:${String(m).padStart(2, "0")} ${ap}`;
+}
+
+export const BOOKING_STATUSES = ["pending", "confirmed", "checked_in", "completed", "cancelled", "no_show"] as const;
+export const PAYMENT_STATUSES = ["unpaid", "deposit_paid", "paid", "refunded"] as const;
