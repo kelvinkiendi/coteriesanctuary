@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import BookingModal from "@/components/BookingModal";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, User, Users, Crown, Sparkles, Check } from "lucide-react";
@@ -102,10 +103,8 @@ const Packages = () => {
     }
   }, []);
 
-  const bookViaWhatsApp = (pkg: string) =>
-    `https://wa.me/254722365861?text=${encodeURIComponent(
-      `Hi COTERIE! I'd like to book the ${pkg}.`
-    )}`;
+  const [bookingService, setBookingService] = useState<string | null>(null);
+  const packageService = (id: string) => `${id.charAt(0).toUpperCase()}${id.slice(1)} Package`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -181,14 +180,13 @@ const Packages = () => {
                       {pkg.price}
                     </p>
                   </div>
-                  <a
-                    href={bookViaWhatsApp(pkg.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => setBookingService(packageService(pkg.id))}
                     className="px-5 py-2.5 bg-accent text-accent-foreground font-body text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gold-dark transition-colors shadow-gold"
                   >
                     Book Session
-                  </a>
+                  </button>
                 </div>
               </motion.article>
             ))}
@@ -209,6 +207,11 @@ const Packages = () => {
           </div>
         </div>
       </main>
+      <BookingModal
+        open={!!bookingService}
+        onClose={() => setBookingService(null)}
+        preselectedService={bookingService || undefined}
+      />
     </div>
   );
 };
