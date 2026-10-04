@@ -60,8 +60,18 @@ export const TIME_SLOTS = [
 
 // ---- Scheduling ----
 export const TIMEZONE = "Africa/Nairobi";
-export const OPEN_MINUTES = 9 * 60; // 9:00 AM
-export const CLOSE_MINUTES = 19 * 60; // 7:00 PM (latest end time)
+export const OPEN_MINUTES = 9 * 60; // 9:00 AM Mon–Sat
+export const CLOSE_MINUTES = 18 * 60; // 6:00 PM Mon–Sat (latest end time)
+export const SUNDAY_OPEN_MINUTES = 12 * 60; // 12:00 PM Sunday
+export const SUNDAY_CLOSE_MINUTES = 17 * 60; // 5:00 PM Sunday (latest end time)
+
+/** Opening minutes for a given date (YYYY-MM-DD) — Sunday has its own hours. */
+export function dayBounds(date: string): { open: number; close: number } {
+  const day = new Date(`${date}T00:00:00Z`).getUTCDay();
+  return day === 0
+    ? { open: SUNDAY_OPEN_MINUTES, close: SUNDAY_CLOSE_MINUTES }
+    : { open: OPEN_MINUTES, close: CLOSE_MINUTES };
+}
 
 /** Default duration (minutes) per service, derived from its name. */
 export function serviceDuration(service: string): number {

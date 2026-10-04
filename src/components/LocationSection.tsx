@@ -26,7 +26,7 @@ const LocationSection = () => (
         >
           <iframe
             title="COTERIE Nail Sanctuary Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8!2d36.78!3d-1.29!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sShujaah+Mall+Kilimani!5e0!3m2!1sen!2ske!4v1"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8!2d36.78!3d-1.29!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sChaka+Court+Kilimani!5e0!3m2!1sen!2ske!4v1"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -61,8 +61,8 @@ const LocationSection = () => (
             </div>
             <div>
               <h3 className="font-heading font-semibold text-primary mb-1">Operating Hours</h3>
-              <p className="font-body text-foreground/70">Mon – Sat: 9:00 AM – 7:00 PM</p>
-              <p className="font-body text-foreground/70">Sun: 11:00 AM – 5:00 PM</p>
+              <p className="font-body text-foreground/70">Mon – Sat: 9:00 AM – 6:00 PM</p>
+              <p className="font-body text-foreground/70">Sun: 12:00 AM – 5:00 PM</p>
             </div>
           </div>
 
@@ -77,7 +77,7 @@ const LocationSection = () => (
           </div>
 
           <a
-            href="https://maps.google.com/?q=Shujaah+Mall+Kilimani+Nairobi"
+            href="https://maps.google.com/?q=Chaka+Court+Kilimani+Nairobi"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-accent-foreground font-body font-semibold text-sm tracking-wider uppercase rounded-sm hover:bg-gold-dark transition-colors shadow-gold"

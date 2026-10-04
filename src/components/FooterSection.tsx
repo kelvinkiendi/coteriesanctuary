@@ -29,8 +29,8 @@ const FooterSection = () => (
         <div>
           <h4 className="font-heading font-semibold mb-4 text-gold">Studio Hours</h4>
           <div className="font-body text-sm text-primary-foreground/60 space-y-1">
-            <p>Mon – Sat: 9 AM – 7 PM</p>
-            <p>Sunday: 11 AM – 5 PM</p>
+            <p>Mon – Sat: 9 AM – 6 PM</p>
+            <p>Sun: 12 PM – 5 PM</p>
           </div>
         </div>
 
@@ -48,7 +48,7 @@ const FooterSection = () => (
             </a>
             <div className="flex items-start gap-2 font-body text-sm text-primary-foreground/60">
               <MapPin size={14} className="mt-0.5 flex-shrink-0" />
-              <span>Shujaah Mall, Opp. Adlife Plaza, Kilimani, Nairobi</span>
+              <span>Chaka Court, Kilimani, Nairobi</span>
             </div>
           </div>
         </div>
