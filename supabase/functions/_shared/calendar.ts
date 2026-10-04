@@ -21,7 +21,7 @@ function headers() {
 function eventBody(b: any) {
   const date = b.appointment_date;
   return {
-    summary: `Coterie Booking — ${b.name} — ${b.service}`,
+    summary: `${b.service} – ${b.name}`,
     description:
       `Client: ${b.name}\nPhone: ${b.phone}\n${b.email ? `Email: ${b.email}\n` : ""}` +
       `Service: ${b.service}\nNail Tech: ${b.nail_tech}\nBooking ID: ${b.ref_number}\n` +
