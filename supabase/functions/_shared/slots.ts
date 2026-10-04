@@ -1,4 +1,4 @@
-import { TIME_SLOTS, slotToMinutes, CLOSE_MINUTES, TIMEZONE } from "./services.ts";
+import { TIME_SLOTS, slotToMinutes, dayBounds, TIMEZONE } from "./services.ts";
 
 function toMin(t: string) { const [h, m] = t.split(":").map(Number); return h * 60 + m; }
 
@@ -16,10 +16,11 @@ export async function freeSlots(admin: any, date: string, techs: string[], durat
   if (error) throw error;
   const busy = (data || []).filter((b: any) => b.id !== excludeId && b.start_time && b.end_time);
   const now = nairobiToday();
+  const { open, close } = dayBounds(date);
   const result: Record<string, string[]> = {};
   for (const slot of TIME_SLOTS) {
     const s = slotToMinutes(slot), e = s + duration;
-    if (e > CLOSE_MINUTES) continue;
+    if (s < open || e > close) continue;
     if (date === now.date && s <= now.minutes + 30) continue;
     const free = techs.filter((t) => !busy.some((b: any) => b.nail_tech === t && toMin(b.start_time) < e && toMin(b.end_time) > s));
     if (free.length) result[slot] = free;

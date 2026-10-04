@@ -5,7 +5,7 @@ import studioImg from "@/assets/studio-interior.jpg";
 const features = [
   { icon: Shield, title: "Medical-Grade Sterilization", desc: "Every tool is sterilized to the highest standards for your safety." },
   { icon: Sparkles, title: "Premium Products", desc: "We use only top-tier, internationally recognized nail care products." },
-  { icon: Car, title: "Convenient Location", desc: "Ample parking at Shujaah Mall, heart of Kilimani." },
+  { icon: Car, title: "Convenient Location", desc: "Ample parking at Chaka Court, heart of Kilimani." },
 ];
 
 const AboutSection = () => (
@@ -44,7 +44,7 @@ const AboutSection = () => (
           </h2>
           <p className="font-body text-foreground/70 leading-relaxed mb-6">
             COTERIE was born from a passion for nail artistry and a commitment to creating an exclusive retreat
-            where every visit feels like an escape. Nestled in Kilimani's Shujaah Mall, our sanctuary blends
+            where every visit feels like an escape. Nestled in Kilimani's Chaka Court, our sanctuary blends
             world-class hygiene standards with an atmosphere of warmth and indulgence.
           </p>
           <p className="font-body text-foreground/70 leading-relaxed mb-10">

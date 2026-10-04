@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
-import { SERVICES, TIME_SLOTS, serviceDuration, slotToMinutes, minutesToHHMM, CLOSE_MINUTES } from "../_shared/services.ts";
+import { SERVICES, TIME_SLOTS, serviceDuration, slotToMinutes, minutesToHHMM, dayBounds } from "../_shared/services.ts";
 import { freeSlots, activeTechs, nairobiToday } from "../_shared/slots.ts";
 import { syncBooking } from "../_shared/calendar.ts";
 import { notifyBookingCreated } from "../_shared/notify.ts";
@@ -40,7 +40,8 @@ Deno.serve(async (req) => {
     const techs = await activeTechs(admin);
     const duration = serviceDuration(service);
     const start = slotToMinutes(time), end = start + duration;
-    if (end > CLOSE_MINUTES) return json({ error: "slot_taken" }, 409);
+    const { open, close } = dayBounds(date);
+    if (start < open || end > close) return json({ error: "slot_taken" }, 409);
 
     const candidates = nail_tech && nail_tech !== "any" ? [nail_tech].filter((t) => techs.includes(t)) : techs;
     if (!candidates.length) return json({ error: "Invalid nail tech." }, 400);
