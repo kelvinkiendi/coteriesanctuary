@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
-import { SERVICES, BOOKING_STATUSES, PAYMENT_STATUSES, serviceDuration, minutesToHHMM, CLOSE_MINUTES, OPEN_MINUTES } from "../_shared/services.ts";
+import { SERVICES, BOOKING_STATUSES, PAYMENT_STATUSES, serviceDuration, minutesToHHMM, dayBounds } from "../_shared/services.ts";
 import { syncBooking } from "../_shared/calendar.ts";
 
 const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -55,7 +55,8 @@ Deno.serve(async (req) => {
         if (!SERVICES.includes(service) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(startStr)) return json({ error: "Invalid values" }, 400);
         const [h, m] = startStr.split(":").map(Number);
         const s = h * 60 + m, duration = serviceDuration(service), e = s + duration;
-        if (s < OPEN_MINUTES || e > CLOSE_MINUTES) return json({ error: "Outside opening hours (9 AM – 7 PM)" }, 400);
+        const { open, close } = dayBounds(date);
+        if (s < open || e > close) return json({ error: "Outside opening hours (Mon–Sat 9 AM – 6 PM, Sun 12 PM – 5 PM)" }, 400);
         const { error } = await admin.rpc("book_slot", {
           _service: service, _date: date, _start: minutesToHHMM(s), _end: minutesToHHMM(e), _duration: duration,
           _tech: tech, _name: cur.name, _phone: cur.phone, _email: cur.email, _requests: cur.requests, _ref: cur.ref_number, _exclude: id,
