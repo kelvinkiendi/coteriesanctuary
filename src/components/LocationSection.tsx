@@ -49,9 +49,9 @@ const LocationSection = () => (
             </div>
             <div>
               <h3 className="font-heading font-semibold text-primary mb-1">Address</h3>
-              <p className="font-body text-foreground/70">Shujaah Mall, Opposite Adlife Plaza</p>
+              <p className="font-body text-foreground/70">Chaka Court ,  </p>
               <p className="font-body text-foreground/70">Kilimani, Nairobi</p>
-              <p className="font-body text-sm text-muted-foreground mt-1">Near Yaya Centre</p>
+              <p className="font-body text-sm text-muted-foreground mt-1">Along Argwings Kodhek Rd</p>
             </div>
           </div>
 
@@ -72,7 +72,7 @@ const LocationSection = () => (
             </div>
             <div>
               <h3 className="font-heading font-semibold text-primary mb-1">Parking</h3>
-              <p className="font-body text-foreground/70">Ample parking available at Shujaah Mall</p>
+              <p className="font-body text-foreground/70">Ample parking available at Chaka Court </p>
             </div>
           </div>
 
