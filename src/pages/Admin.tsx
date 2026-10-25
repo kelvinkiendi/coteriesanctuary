@@ -253,6 +253,9 @@ const Details = ({ b, meta, onClose, onSave }: {
         </div>
 
         <p className="font-body text-xs uppercase tracking-wider text-muted-foreground mb-2">Reschedule / change</p>
+        {(!b.start_time || !b.appointment_date) && (
+          <p className="font-body text-xs text-accent mb-2">This older booking has no time saved — choose the service, date and start time below, then click Save changes.</p>
+        )}
         <div className="space-y-3 mb-4">
           <select className={sel} value={service} onChange={(e) => setService(e.target.value)}>
             {!meta.services.includes(service) && <option value={service}>{service}</option>}
