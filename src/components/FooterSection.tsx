@@ -43,8 +43,8 @@ const FooterSection = () => (
             <a href="https://wa.me/254722365861" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
               <Phone size={14} /> WhatsApp
             </a>
-            <a href="mailto:hello@coterie.co.ke" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
-              <Mail size={14} /> hello@coterie.co.ke
+            <a href="mailto:coterienails@gmail.com" className="flex items-center gap-2 font-body text-sm text-primary-foreground/60 hover:text-gold transition-colors">
+              <Mail size={14} /> coterienails@gmail.com
             </a>
             <div className="flex items-start gap-2 font-body text-sm text-primary-foreground/60">
               <MapPin size={14} className="mt-0.5 flex-shrink-0" />

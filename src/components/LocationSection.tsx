@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MapPin, Clock, Car, ExternalLink } from "lucide-react";
+import { MapPin, Clock, Car, ExternalLink, Mail } from "lucide-react";
 
 const LocationSection = () => (
   <section id="contact" className="py-20 md:py-32 bg-background">
