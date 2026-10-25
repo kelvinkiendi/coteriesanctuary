@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MapPin, Clock, Car, ExternalLink } from "lucide-react";
+import { MapPin, Clock, Car, ExternalLink, Mail } from "lucide-react";
 
 const LocationSection = () => (
   <section id="contact" className="py-20 md:py-32 bg-background">
@@ -75,6 +75,19 @@ const LocationSection = () => (
               <p className="font-body text-foreground/70">Ample parking available at Chaka Court </p>
             </div>
           </div>
+
+          <div className="flex gap-4">
+            <div className="flex-shrink-0 w-10 h-10 rounded-sm bg-accent/10 flex items-center justify-center">
+              <Mail size={20} className="text-accent" />
+            </div>
+            <div>
+              <h3 className="font-heading font-semibold text-primary mb-1">Email</h3>
+              <a href="mailto:coterienails@gmail.com" className="font-body text-foreground/70 hover:text-accent transition-colors underline-offset-4 hover:underline">
+                coterienails@gmail.com
+              </a>
+            </div>
+          </div>
+
 
           <a
             href="https://maps.google.com/?q=Chaka+Court+Kilimani+Nairobi"
