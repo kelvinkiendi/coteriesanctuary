@@ -79,7 +79,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "retry_sync") {
-      const { data: pending } = await admin.from("bookings").select("*").in("calendar_sync_status", ["pending", "failed"]).not("appointment_date", "is", null).limit(50);
+      const { data: pending } = await admin.from("bookings").select("*").in("calendar_sync_status", ["pending", "failed"]).not("appointment_date", "is", null).not("start_time", "is", null).limit(50);
       let synced = 0;
       for (const b of pending || []) {
         const sync = await syncBooking(b);

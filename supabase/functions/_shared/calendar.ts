@@ -35,6 +35,13 @@ function eventBody(b: any) {
 /** Create, update, or delete the event for a booking. Returns new sync fields. */
 export async function syncBooking(b: any): Promise<{ calendar_sync_status: string; calendar_event_id: string | null }> {
   if (!calendarConfigured()) return { calendar_sync_status: "pending", calendar_event_id: b.calendar_event_id ?? null };
+  // Legacy bookings without a start time cannot be placed on the calendar — skip without calling the API.
+  const validTime = typeof b.start_time === "string" && /^\d{2}:\d{2}/.test(b.start_time) &&
+    (!b.end_time || /^\d{2}:\d{2}/.test(b.end_time));
+  if (!b.appointment_date || !validTime) {
+    console.log("Calendar sync skipped (missing date/time) for", b.ref_number);
+    return { calendar_sync_status: "failed", calendar_event_id: b.calendar_event_id ?? null };
+  }
   try {
     const cancelled = b.status === "cancelled" || b.status === "no_show";
     if (cancelled) {
