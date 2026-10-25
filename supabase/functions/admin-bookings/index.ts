@@ -15,7 +15,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   const expected = Deno.env.get("ADMIN_PASSCODE");
   const body = await req.json().catch(() => ({}));
-  if (!expected || typeof body.passcode !== "string" || !safeEqual(body.passcode, expected)) {
+  const provided = typeof body.passcode === "string" ? body.passcode.trim() : null;
+  if (!expected || !provided || !safeEqual(provided, expected)) {
+    console.error("admin auth failed: passcode_configured=", !!expected, "passcode_provided=", !!provided);
     await new Promise((r) => setTimeout(r, 500));
     return json({ error: "unauthorized" }, 401);
   }
