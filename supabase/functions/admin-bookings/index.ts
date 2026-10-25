@@ -15,7 +15,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   const expected = Deno.env.get("ADMIN_PASSCODE");
   const body = await req.json().catch(() => ({}));
-  if (!expected || typeof body.passcode !== "string" || !safeEqual(body.passcode, expected)) {
+  const provided = typeof body.passcode === "string" ? body.passcode.trim() : null;
+  if (!expected || !provided || !safeEqual(provided, expected)) {
+    console.error("admin auth failed: passcode_configured=", !!expected, "passcode_provided=", !!provided);
     await new Promise((r) => setTimeout(r, 500));
     return json({ error: "unauthorized" }, 401);
   }
@@ -77,7 +79,7 @@ Deno.serve(async (req) => {
     }
 
     if (action === "retry_sync") {
-      const { data: pending } = await admin.from("bookings").select("*").in("calendar_sync_status", ["pending", "failed"]).not("appointment_date", "is", null).limit(50);
+      const { data: pending } = await admin.from("bookings").select("*").in("calendar_sync_status", ["pending", "failed"]).not("appointment_date", "is", null).not("start_time", "is", null).limit(50);
       let synced = 0;
       for (const b of pending || []) {
         const sync = await syncBooking(b);
