@@ -54,7 +54,9 @@ Deno.serve(async (req) => {
       const scheduleChanged = service !== cur.service || tech !== cur.nail_tech || date !== cur.appointment_date || startStr !== String(cur.start_time).slice(0, 5);
 
       if (scheduleChanged) {
-        if (!SERVICES.includes(service) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(startStr)) return json({ error: "Invalid values" }, 400);
+        if (!SERVICES.includes(service)) return json({ error: "Please choose a service from the current services list." }, 400);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return json({ error: "Please choose a valid appointment date." }, 400);
+        if (!/^\d{2}:\d{2}$/.test(startStr)) return json({ error: "Please set a start time for the appointment." }, 400);
         const [h, m] = startStr.split(":").map(Number);
         const s = h * 60 + m, duration = serviceDuration(service), e = s + duration;
         const { open, close } = dayBounds(date);
