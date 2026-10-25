@@ -78,10 +78,11 @@ const Admin = () => {
 
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { data } = await call(input, { action: "login" });
+    const pc = input.trim();
+    const { data } = await call(pc, { action: "login" });
     if (data?.ok) {
-      sessionStorage.setItem(PASS_KEY, input);
-      setPasscode(input);
+      sessionStorage.setItem(PASS_KEY, pc);
+      setPasscode(pc);
     } else toast({ title: "Incorrect passcode", variant: "destructive" });
   };
 
