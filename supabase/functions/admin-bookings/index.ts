@@ -58,9 +58,10 @@ Deno.serve(async (req) => {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return json({ error: "Please choose a valid appointment date." }, 400);
         if (!/^\d{2}:\d{2}$/.test(startStr)) return json({ error: "Please set a start time for the appointment." }, 400);
         const [h, m] = startStr.split(":").map(Number);
+        if (h > 23 || m > 59) return json({ error: "Please set a valid start time." }, 400);
         const s = h * 60 + m, duration = serviceDuration(service), e = s + duration;
-        const { open, close } = dayBounds(date);
-        if (s < open || e > close) return json({ error: "Outside opening hours (Mon–Sat 9 AM – 6 PM, Sun 12 PM – 5 PM)" }, 400);
+        // Admin override: reception may schedule outside public opening hours.
+        // Overlap protection is still enforced by book_slot.
         const { error } = await admin.rpc("book_slot", {
           _service: service, _date: date, _start: minutesToHHMM(s), _end: minutesToHHMM(e), _duration: duration,
           _tech: tech, _name: cur.name, _phone: cur.phone, _email: cur.email, _requests: cur.requests, _ref: cur.ref_number, _exclude: id,
