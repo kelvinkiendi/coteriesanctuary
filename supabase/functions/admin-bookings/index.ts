@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
-import { SERVICES, BOOKING_STATUSES, PAYMENT_STATUSES, serviceDuration, minutesToHHMM, dayBounds } from "../_shared/services.ts";
+import { SERVICES, BOOKING_STATUSES, PAYMENT_STATUSES, serviceDuration, minutesToHHMM } from "../_shared/services.ts";
 import { syncBooking } from "../_shared/calendar.ts";
 
 const json = (b: unknown, status = 200) => new Response(JSON.stringify(b), { status, headers: { ...corsHeaders, "Content-Type": "application/json" } });
